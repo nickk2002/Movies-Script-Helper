@@ -2,6 +2,8 @@
 Collection of python scripts that help find subtitles change directory names 
 
 The setup is quite easy
+
+
 1.First clone the repo using `git clone https://github.com/nickk2002/Movies-Script-Helper`
 
 
