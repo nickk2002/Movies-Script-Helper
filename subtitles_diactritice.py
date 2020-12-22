@@ -44,9 +44,9 @@ def convert_line_diactritice(line):
     return line
 
 
-def run_subtitles_diactritice(path):
+def run_subtitles_diactritice(path,file_name):
     if check_if_already_modified(path, "MODIFIED#0"):
-        print(crayons.green("Already Modified"))
+        print(crayons.green(f"{file_name} is already Modified"))
         return
 
     change_encoding_to_utf8(path)
@@ -70,7 +70,4 @@ def run_subtitle_replace_dir(directory):
         for file in files:
             path = subdir + os.sep + file
             if file.endswith(".srt"):
-                print(crayons.black(path))
-                run_subtitles_diactritice(path)
-
-
+                run_subtitles_diactritice(path,file)

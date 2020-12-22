@@ -1,21 +1,14 @@
-import zipfile
-import os
-import io
 from urllib.request import Request, urlopen
-import requests as R
 from bs4 import BeautifulSoup
 import regex as re
 from selenium import webdriver
 import time
-import py7zr
-from pyunpack import Archive
 import glob
 import os
 from rarfile import RarFile
 RarFile.UNRAR_TOOL =r'C:\Program Files (x86)\UnrarDLL\UnRAR.dll'
 
 
-# driver = webdriver.Chrome("M:\Quick Acces\Downloads\Apps\chromedriver.exe")
 driver = webdriver.Edge("C:\Windows\SystemApps\Microsoft.MicrosoftEdge_8wekyb3d8bbwe\MicrosoftEdge.exe")
 def download_subtitle(movie_name,path):
 
