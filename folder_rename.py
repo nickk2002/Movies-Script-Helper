@@ -1,5 +1,7 @@
 import os
+
 import regex as re
+
 
 def is_int(s):
     try:
@@ -7,6 +9,8 @@ def is_int(s):
         return True
     except ValueError:
         return False
+
+
 def modify_name(name):
     renamed = str()
     i = 0
@@ -17,7 +21,7 @@ def modify_name(name):
             if name[i - 1] != '(':
                 renamed += '('
 
-            renamed += name[i:i+4]
+            renamed += name[i:i + 4]
             renamed += ')'
             break
         if name[i] == '.':
@@ -34,26 +38,34 @@ def modify_name(name):
             renamed += letter
         i += 1
     return renamed
+
+
 def modify_name_regex(name):
     pattern_number = "\d+"
-    year = re.findall(pattern_number,name)
+    year = re.findall(pattern_number, name)
 
     pattern_letters = "[A-Za-z ]+"
-    first_match = re.search(pattern_letters,name).end()
+    first_match = re.search(pattern_letters, name).end()
 
-    puncte="\.{0}(\.{3})?"
-    puncte_final = re.findall(puncte,name[first_match:])[0]
+    puncte = "\.{0}(\.{3})?"
+    puncte_final = re.findall(puncte, name[first_match:])[0]
 
-    current_name =  name[:first_match] + puncte_final
+    current_name = name[:first_match] + puncte_final
     if len(year) > 0:
         current_name += f'({year[0]})'
     return current_name
 
+
 def run_folder_rename_dir(directory):
-    lista = [(file.name,file.path) for file in os.scandir(directory) if file.is_dir()]
-    for (nume_folder,path) in lista:
-        renamed_folder_name = modify_name(nume_folder)
-        print(nume_folder,"=>",renamed_folder_name,end = ' ')
-        path_modificat = path.replace(nume_folder,renamed_folder_name)
-        print(path,path_modificat)
-        os.rename(path,path_modificat)
+    directory_files = [(file.name, file.path) for file in os.scandir(directory) if file.is_dir()]
+
+    for (nume_folder, path) in directory_files:
+        renamed_folder_name = modify_name_regex(nume_folder)
+        print(nume_folder, "=>", renamed_folder_name)
+    answer = input("Do you really want to modify the names? y/n ")
+    if answer == 'Y':
+        for (nume_folder, path) in directory_files:
+            renamed_folder_name = modify_name_regex(nume_folder)
+            if nume_folder != renamed_folder_name:
+                path_modificat = path.replace(nume_folder, renamed_folder_name)
+                os.rename(path, path_modificat)

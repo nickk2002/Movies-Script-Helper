@@ -1,7 +1,5 @@
 import os
-import regex as re
 import subprocess
-import termcolor as colored
 import crayons
 import subtitles_diactritice as subtitles
 
