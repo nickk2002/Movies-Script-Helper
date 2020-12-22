@@ -10,9 +10,15 @@ The setup is quite easy
 2.Navigate to the created folder `cd Movies-Script-Helper`
 
 
-3.Run the movie handler with desired arguments
+3.Install requirements `pip install -r requirements.txt`
+
+
+3.Run the movie handler with desired arguments `py movie_handler.py`
+
 
 Arguments: 
+
+
 `-dir=directory_name` to set the directory of movies
 
 
