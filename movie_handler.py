@@ -36,7 +36,7 @@ def print_and_exit(error_message):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--dir", "-d", help="set the base directory for movie handling")
+    parser.add_argument("-dir","--directory", help="set the base directory for movie handling")
     parser.add_argument("-v","--view",action='store_true')
     parser.add_argument("-yifi","--find-yifi",action='store_true',help="find yts subtitles ")
     parser.add_argument("-di","--diacritice",action='store_true',help="run diactritice")
@@ -44,16 +44,16 @@ def main():
 
     args = parser.parse_args()
 
-    if args.dir is None or not os.path.exists(args.dir):
-        if args.dir is None:
+    if args.directory is None or not os.path.exists(args.directory):
+        if args.directory is None:
             print(f"No dir provided, using default.")
-        elif not os.path.exists(str(args.dir)):
-            print(f"The directory provided {args.dir} does not exits!")
-        args.dir = pathlib.Path(__file__).parent.absolute()
-        print(f"Using the current directory {args.dir}")
+        elif not os.path.exists(str(args.directory)):
+            print(f"The directory provided {args.directory} does not exits!")
+        args.directory = pathlib.Path(__file__).parent.absolute()
+        print(f"Using the current directory {args.directory}")
 
     movie_handler = MovieHandler(
-        directory=args.dir,
+        directory=args.directory,
     )
     if args.find_yifi:
         movie_handler.run_subtitles_serach_yifi(args.view)
