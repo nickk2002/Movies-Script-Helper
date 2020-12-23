@@ -1,6 +1,6 @@
 import os
 import regex as re
-from Screapers.imdb_screaper import IMDBScreaper
+from Screapers.imdb_scraper import IMDBScreaper
 
 
 class Movie:
@@ -13,7 +13,7 @@ class Movie:
         self.get_information_from_imdb()
 
     def get_information_from_imdb(self):
-        information = IMDBScreaper().run_screaper(self.name)
+        information = IMDBScreaper().run_scraper(self.name)
         self.imdb_id = information["imdb_id"]
         self.information = information
 

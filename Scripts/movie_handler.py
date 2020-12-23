@@ -1,9 +1,9 @@
 import os
 import argparse
 import pathlib
-from Screapers.yifi_screaper import YifiScreaper
-from subtitles_diactritice import run_subtitle_replace_dir
-from folder_rename import run_folder_rename_dir
+from Screapers.yifi_scraper import YifiScreaper
+from Scripts.subtitles_diactritice import run_subtitle_replace_dir
+from Scripts.folder_rename import run_folder_rename_dir
 
 
 class MovieHandler:
