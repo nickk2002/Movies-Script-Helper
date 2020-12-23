@@ -3,7 +3,7 @@ import os
 import io
 import shutil
 import requests as R
-from helpers import get_html_from_url
+from Screapers.helpers import get_html_from_url
 
 class YifiScreaper:
     def __init__(self,directory,verbose_mode = False):
