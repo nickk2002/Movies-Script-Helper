@@ -1,6 +1,6 @@
 import regex as re
 
-from helpers import get_html_from_url
+from Screapers.helpers import get_html_from_url
 
 class IMDBScreaper():
     def __init__(self):
@@ -32,7 +32,7 @@ class IMDBScreaper():
         movie_link = result.find('a')['href']
         return self.base_link + movie_link
 
-    def run_screaper(self, movie_name) -> dict:
+    def run_scraper(self, movie_name) -> dict:
         movie_link = self.get_first_link_result(movie_name)
         print(movie_link)
         html = get_html_from_url(movie_link)
