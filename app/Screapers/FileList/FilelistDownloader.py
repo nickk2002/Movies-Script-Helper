@@ -2,10 +2,11 @@ import os
 
 from Screapers.FileList.FilelistTorrentData import FileListTorrentData
 from Screapers.FileList.filelist_scraper_requests import FileListScraper
+from Screapers.settings import Download
 
 
 class FileListDownloader():
-    download_dir = "E:\Quick access\Downloads"
+    download_dir = Download.downlaod_folder
 
     def __init__(self):
         self.scraper = FileListScraper()
