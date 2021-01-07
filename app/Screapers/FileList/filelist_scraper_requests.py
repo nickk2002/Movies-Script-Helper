@@ -1,11 +1,13 @@
-import cloudscraper
+import ssl
+
 import regex as re
+import requests
 from bs4 import BeautifulSoup
+from fp.fp import FreeProxy
 
 from Screapers.FileList.FilelistTorrentData import FileListTorrentData
 from Screapers.IMDB.imdb_scraper import IMDBScreaper
 from Screapers.settings import FileListSettings
-
 
 class FileListScraper():
     '''
@@ -15,20 +17,29 @@ class FileListScraper():
     base_link = "https://filelist.io/"
 
     def log_in(self):
-        self.session = cloudscraper.CloudScraper()
+        self.session = requests.session()
+        headers = {
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36"
+        }
+        proxy = FreeProxy().get()
+        print(proxy)
         self.session.proxies = {
-            "http": "http://10.10.10.10:8000",
+            "http": proxy,
         }
         data = {"username": FileListSettings.user, "password": FileListSettings.password}
-        r = self.session.get(self.base_link)
-
+        r = self.session.get(self.base_link, headers=headers)
         soup = BeautifulSoup(r.content, "html.parser")
         login_action_url = self.base_link + soup.form["action"]
         token = soup.form.input.get("value")
         data["validator"] = token
-        response = self.session.post(login_action_url, data=data)
+        response = self.session.post(login_action_url, data=data, headers=headers)
 
         soup = BeautifulSoup(response.content, "html.parser")
+        error_image = soup.find("img", src="styles/images/attention.png")
+        if error_image:
+            raise Exception(
+                "Login failed! Filelist says too many request, comeback in an hour. \n"
+                "'Numarul maxim permis de actiuni a fost depasit. Reveniti peste o ora.' :(")
         avatar = soup.find("div", {"class": "status_avatar"})
         if avatar:
             print("Login sucessfully!")

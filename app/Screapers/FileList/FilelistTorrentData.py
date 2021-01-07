@@ -14,7 +14,7 @@ class FileListTorrentData():
     duration: int
 
     def pretty_print(self):
-        print(f'[{self.size} GB] [S:{self.seeders}] [Speed:{round(self.download_speed,2)}] [Duration:{self.duration}]', end=" ")
+        print(f'[{self.size} GB] [S:{self.seeders}] [Bitrate:{round(self.download_speed,2)}] ', end=" ")
         if self.has_freeleech:
             print(Fore.GREEN, self.name)
         else:
