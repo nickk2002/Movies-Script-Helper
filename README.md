@@ -15,7 +15,7 @@ The setup is quite easy
 4.Navigate to the app folder where the code lives `cd app`
 
 
-3.Run the movie handler with desired arguments `py Scripts.movie_handler -di -dir="directory" -tor`
+3.Run the movie handler with desired arguments `py -m Scripts.movie_handler -di -dir="directory" -tor`
 
 
 Arguments: 
