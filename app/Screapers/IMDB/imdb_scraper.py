@@ -35,7 +35,7 @@ class IMDBScreaper():
 
         all_headers = html.find_all("div", {"class": "findSection"})
         movie_headings = list(filter(lambda header_div: self.check_good_header(header_div), all_headers))
-        if len(movie_headings) == 0:
+        if not movie_headings:
             raise Exception(f"No movies found on {self.base_link} with the name '{movie_name}'")
         first_movie_header = movie_headings[0]
 
