@@ -34,7 +34,7 @@ class MovieHandler:
         run_folder_rename_dir(self.directory)
 
     def run_filelist_downloader(self):
-        FileListDownloader()
+        FileListDownloader().run_shell()
 
 
 def main():

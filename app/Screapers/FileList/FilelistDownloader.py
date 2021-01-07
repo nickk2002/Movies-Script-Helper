@@ -10,9 +10,8 @@ class FileListDownloader():
 
     def __init__(self):
         self.scraper = FileListScraper()
-        self.cli_manager()
 
-    def cli_manager(self):
+    def run_shell(self):
         movie_name = self.ask_for_movie_name()
 
         torrent_list = self.scraper.scrape(movie_name)
@@ -21,19 +20,25 @@ class FileListDownloader():
         option = self.get_user_option(number_of_torrents=len(torrent_list))
         self.download_torrent(torrent_list[option])
 
-    def ask_for_movie_name(self):
+    @staticmethod
+    def ask_for_movie_name():
         movie_name = input("enter a movie name to download from filelist.io ")
         return movie_name
 
-    def print_user_options(self, torrent_list):
+    @staticmethod
+    def print_user_options(torrent_list):
         for (index, available_torrent) in enumerate(torrent_list):
-            print(f"Option: {index}", end=" ")
+            print(index, end="  ")
             available_torrent.pretty_print()
 
-    def get_user_option(self, number_of_torrents):
+    @staticmethod
+    def get_user_option(number_of_torrents):
         while True:
             try:
-                option_id = int(input("Chose option number : "))
+                user_input = input("Chose option number : ")
+                if user_input == 'quit':
+                    exit(0)
+                option_id = int(user_input)
                 if option_id >= number_of_torrents:
                     print(f"Please select an integere from range 0-{number_of_torrents - 1}")
                 else:
@@ -48,3 +53,6 @@ class FileListDownloader():
         with open(self.download_dir + os.sep + name + ".torrent", 'wb') as f:
             content = self.scraper.session.get(torrent.download_link).content
             f.write(content)
+
+if __name__ == "__main__":
+    FileListDownloader().run_shell()

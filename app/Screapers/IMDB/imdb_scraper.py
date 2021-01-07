@@ -9,7 +9,7 @@ from Screapers.helpers import get_html_from_url
 class IMDBData:
     id: str
     rating: float
-    duration: str
+    duration: int # in mimutes
     votes: int
 
 
@@ -61,12 +61,17 @@ class IMDBScreaper():
         subtext = html.find("div", {"class": "subtext"})
         duration = subtext.find("time").get_text().strip()
 
+        matches = re.findall("\d+",duration)
+        minutes = int(matches[0]) * 60
+        if len(matches) > 1:
+            minutes += int(matches[1])
+
         return IMDBData(
             rating=rating,
             votes=nr_votes,
-            duration=duration,
+            duration=minutes,
             id=imdb_id
         )
 
-
-print(IMDBScreaper().get_imdb_id("Thor"))
+if __name__ == "__main__":
+    print(IMDBScreaper().run_scraper("Thor"))
