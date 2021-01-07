@@ -12,8 +12,10 @@ The setup is quite easy
 
 3.Install requirements `pip install -r requirements.txt`
 
+4.Navigate to the app folder where the code lives `cd app`
 
-3.Run the movie handler with desired arguments `py movie_handler.py`
+
+3.Run the movie handler with desired arguments `py Scripts.movie_handler -di -dir="directory" -tor`
 
 
 Arguments: 
@@ -26,4 +28,6 @@ Arguments:
 
 
 `-m` to run folder rename
-     
+
+
+`-tor` to run interactive download shell from filelist
