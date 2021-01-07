@@ -1,10 +1,12 @@
 import os
-import argparse
 import pathlib
-from Screapers.yifi_scraper import YifiScreaper
-from Scripts.subtitles_diactritice import run_subtitle_replace_dir
-from Scripts.folder_rename import run_folder_rename_dir
 
+import argparse
+
+from Screapers.FileList.FilelistDownloader import FileListDownloader
+from Scripts.folder_rename import run_folder_rename_dir
+from Scripts.subtitles_diactritice import run_subtitle_replace_dir
+from Screapers.yifi_scraper import YifiScreaper
 
 class MovieHandler:
     def __init__(self, directory):
@@ -31,6 +33,8 @@ class MovieHandler:
     def run_folder_rename(self):
         run_folder_rename_dir(self.directory)
 
+    def run_filelist_downloader(self):
+        FileListDownloader()
 
 
 def main():
@@ -40,6 +44,8 @@ def main():
     parser.add_argument("-yifi", "--find-yifi", action='store_true', help="find yts subtitles ")
     parser.add_argument("-di", "--diacritice", action='store_true', help="run diactritice")
     parser.add_argument("-m", "--modify-name", action='store_true', help="modify folder name to match trailer")
+    parser.add_argument("-tor", "--filelist-torrent", action='store_true',
+                        help="runs interactive downloader from filelist")
 
     args = parser.parse_args()
 
@@ -60,6 +66,8 @@ def main():
         movie_handler.run_subtitles_replace()
     if args.modify_name:
         movie_handler.run_folder_rename()
+    if args.filelist_torrent:
+        movie_handler.run_filelist_downloader()
 
 
 if __name__ == "__main__":

@@ -4,7 +4,7 @@ from Screapers.FileList.FilelistTorrentData import FileListTorrentData
 from Screapers.FileList.filelist_scraper_requests import FileListScraper
 
 
-class FileListComandLineDownloader():
+class FileListDownloader():
     download_dir = "E:\Quick access\Downloads"
 
     def __init__(self):

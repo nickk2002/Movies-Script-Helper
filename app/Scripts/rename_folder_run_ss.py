@@ -1,7 +1,7 @@
 import os
 import subprocess
 import crayons
-from Scripts import subtitles_diactritice as subtitles
+from app.Scripts import subtitles_diactritice as subtitles
 
 # !!!! IMPORTANT daca vrei sa schimbi directorul de cautare
 input_dir = r"M:\TV shows\Merlin"
