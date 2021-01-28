@@ -1,40 +1,29 @@
-import ssl
-
 import regex as re
-import requests
 from bs4 import BeautifulSoup
-from fp.fp import FreeProxy
 
-from Screapers.FileList.FilelistTorrentData import FileListTorrentData
-from Screapers.IMDB.imdb_scraper import IMDBScreaper
-from Screapers.settings import FileListSettings
+from Scrapers.FileList.FilelistTorrentData import FileListTorrentData
+from Scrapers.IMDB.imdb_scraper import IMDBScreaper,IMDBScrapeMode
+from Scrapers.MyScraperLibrary.ScraperQuery import ScaperQuery
+from Scrapers.settings import FileListSettings
 
-class FileListScraper():
+
+class FileListScraper(ScaperQuery):
     '''
         class that scrapes torrents from filelist
     '''
 
     base_link = "https://filelist.io/"
+    login = True
+    user = FileListSettings.user
+    password = FileListSettings.password
+    # use_proxy = True
 
-    def log_in(self):
-        self.session = requests.session()
-        headers = {
-            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36"
-        }
-        proxy = FreeProxy().get()
-        print(proxy)
-        self.session.proxies = {
-            "http": proxy,
-        }
-        data = {"username": FileListSettings.user, "password": FileListSettings.password}
-        r = self.session.get(self.base_link, headers=headers)
-        soup = BeautifulSoup(r.content, "html.parser")
-        login_action_url = self.base_link + soup.form["action"]
-        token = soup.form.input.get("value")
-        data["validator"] = token
-        response = self.session.post(login_action_url, data=data, headers=headers)
+    def __init__(self):
+        super().__init__()
 
-        soup = BeautifulSoup(response.content, "html.parser")
+
+    def check_good_login(self, soup: BeautifulSoup, data: dict):
+
         error_image = soup.find("img", src="styles/images/attention.png")
         if error_image:
             raise Exception(
@@ -47,22 +36,15 @@ class FileListScraper():
             raise Exception(f"Login failed! Check user and password set up in settings.py "
                             f"\n username: {data['username']} \n password: {data['password']} ")
 
-    def get_query_link(self, imdb_id):
-        return self.base_link + f"/browse.php?search={imdb_id}&cat=0&searchin=3&sort=2"
+    def get_query_link(self, movie_name: str):
+        self.imdb_id, self.duration = IMDBScreaper().scrape(movie_name, IMDBScrapeMode.ID_DURATION)
+        return f"/browse.php?search={self.imdb_id}&cat=0&searchin=3&sort=2"
 
-    def scrape(self, movie_name: str):
-        self.log_in()
-        self.IMDBData = IMDBScreaper().run_scraper(movie_name)
-
-        query_link = self.get_query_link(self.IMDBData.id)
-        query_response = self.session.get(query_link)
-        return self.get_torrent_results(query_response)
-
-    def get_torrent_information(self, soup: BeautifulSoup):
+    def handle_torrent(self, soup: BeautifulSoup):
         '''
             returns a FileListTorrent given the html of one of the results of the search
         '''
-        columns = soup.find_all("div", {"class": "torrenttable"})
+        columns = soup.find_all("div", class_="torrenttable")
 
         torrent_colum = columns[1]
         torrent_name = torrent_colum.find("b").get_text()
@@ -80,7 +62,7 @@ class FileListScraper():
         seeders_colum = columns[8]
         seeders = seeders_colum.find("span").get_text()
 
-        movie_duration = self.IMDBData.duration
+        movie_duration = self.duration
         download_speed = 400 * torrent_size / (3 * movie_duration)
 
         return FileListTorrentData(
@@ -93,13 +75,12 @@ class FileListScraper():
             duration=movie_duration,
         )
 
-    def get_torrent_results(self, response):
+    def handle_query_result(self, query_url: str, soup: BeautifulSoup, scrape_enum = None):
         '''
             gets the torrent data from the query reponse
         '''
-        html = BeautifulSoup(response.content, 'html.parser')
-        all_soup_results = html.find_all("div", {"class": "torrentrow"})
-        torrent_list = [self.get_torrent_information(soup) for soup in all_soup_results]
+        all_soup_results = soup.find_all("div", {"class": "torrentrow"})
+        torrent_list = [self.handle_torrent(soup) for soup in all_soup_results]
         if not torrent_list:
             raise Exception("Could not find any movies on filelist.io with your search")
         return torrent_list

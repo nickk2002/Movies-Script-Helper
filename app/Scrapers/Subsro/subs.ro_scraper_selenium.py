@@ -7,8 +7,8 @@ from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 
-from app.Screapers import settings
-from app.Screapers.helpers import wait_to_load
+from app.Scrapers import settings
+from app.Scrapers.helpers import wait_to_load
 from app.Scripts.movie import Movie
 
 test_folder = "E:\Quick access\Documents\Info\Proiecte mari\Python\Movie Project\Folder Test"

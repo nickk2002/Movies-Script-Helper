@@ -3,10 +3,10 @@ import pathlib
 
 import argparse
 
-from Screapers.FileList.FilelistDownloader import FileListDownloader
+from Scrapers.FileList.FilelistDownloader import FileListDownloader
 from Scripts.folder_rename import run_folder_rename_dir
 from Scripts.subtitles_diactritice import run_subtitle_replace_dir
-from Screapers.yifi_scraper import YifiScreaper
+from Scrapers.yifi_scraper import YifiScreaper
 
 class MovieHandler:
     def __init__(self, directory):

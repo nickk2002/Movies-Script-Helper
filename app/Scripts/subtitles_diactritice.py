@@ -47,7 +47,7 @@ def convert_line_diactritice(line):
 def run_subtitles_diactritice(path,file_name):
     if check_if_already_modified(path, "MODIFIED#0"):
         print(crayons.green(f"{file_name} is already Modified"))
-        return
+        return False
 
     change_encoding_to_utf8(path)
     diactritice_text = str()
@@ -61,13 +61,19 @@ def run_subtitles_diactritice(path,file_name):
 
     with open(path, "w", encoding='utf-8') as f:
         f.write(text_nou)
-
+    return True
 
 def run_subtitle_replace_dir(directory):
     print(crayons.magenta("Running diacritice replace..."))
 
+    subtitles_modifed = 0
+    subtitles = 0
     for subdir, dirs, files in os.walk(directory):
         for file in files:
             path = subdir + os.sep + file
             if file.endswith(".srt"):
-                run_subtitles_diactritice(path,file)
+                subtitles += 1
+                status = run_subtitles_diactritice(path,file)
+                if status:
+                    subtitles_modifed += 1
+    print(f"Discovered {subti}")

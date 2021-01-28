@@ -6,7 +6,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 
-from Screapers.helpers import wait_to_load
+from Scrapers.helpers import wait_to_load
 from Scripts.movie import Movie
 
 
@@ -71,14 +71,12 @@ class FileListScraper():
     def scrape(self, movie):
         self.initialize_selenium()
         self.log_in()
-        while True:
-            print("Ok")
-        # query_link = self.get_query_link(movie.imdb_id)
-        # self.browser.get(query_link)
-        #
-        # torrent_list = self.get_torrent_results()
-        # option_id = self.handle_user_input(len(torrent_list))
-        # self.download_torrent(torrent_list[option_id])
+        query_link = self.get_query_link(movie.imdb_id)
+        self.browser.get(query_link)
+
+        torrent_list = self.get_torrent_results()
+        option_id = self.handle_user_input(len(torrent_list))
+        self.download_torrent(torrent_list[option_id])
 
     def get_torrent_information(self, soup: BeautifulSoup, selenium: WebElement):
         """

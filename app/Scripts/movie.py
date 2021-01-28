@@ -2,7 +2,7 @@ import os
 
 import regex as re
 
-from Screapers.IMDB.imdb_scraper import IMDBScreaper
+from Scrapers.IMDB.imdb_scraper import IMDBScreaper
 
 
 class Movie:
