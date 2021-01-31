@@ -4,7 +4,7 @@ import zipfile
 from bs4 import BeautifulSoup
 from pyunpack import Archive
 import time
-from Scrapers.IMDB.imdb_scraper import IMDBScreaper,IMDBScrapeMode
+from Scrapers.IMDB.imdb_scraper import IMDBScraper,IMDBScrapeMode
 from Scrapers.MyScraperLibrary.ScraperQuery import ScaperQuery
 
 
@@ -13,7 +13,7 @@ class SubsroScraper(ScaperQuery):
 
 
     def get_query_link(self, query_name):
-        imdb_id = IMDBScreaper().scrape(query_name,IMDBScrapeMode.ID)
+        imdb_id = IMDBScraper().scrape(query_name, IMDBScrapeMode.ID)
         return f"/subtitrari/imdbid/{imdb_id}"
 
     def handle_result(self, soup: BeautifulSoup):
