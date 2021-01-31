@@ -10,7 +10,7 @@ from Scrapers.helpers import wait_to_load
 from Scripts.movie import Movie
 
 
-class FileListTorrent():
+class FileListTorrent:
     """
         class that handler printing a torrent to the screen
     """

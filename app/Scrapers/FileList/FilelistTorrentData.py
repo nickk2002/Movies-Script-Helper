@@ -4,7 +4,7 @@ from colorama import Fore, Style
 
 
 @dataclass
-class FileListTorrentData():
+class FileListTorrentData:
     name: str
     download_link: str
     size: int

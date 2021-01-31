@@ -5,7 +5,7 @@ from Scrapers.FileList.filelist_scraper_requests import FileListScraper
 from Scrapers.settings import Download
 
 
-class FileListDownloader():
+class FileListDownloader:
     download_dir = Download.download_folder
 
     def __init__(self):

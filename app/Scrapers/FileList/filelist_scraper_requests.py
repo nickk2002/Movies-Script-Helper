@@ -2,25 +2,25 @@ import regex as re
 from bs4 import BeautifulSoup
 
 from Scrapers.FileList.FilelistTorrentData import FileListTorrentData
-from Scrapers.IMDB.imdb_scraper import IMDBScreaper,IMDBScrapeMode
+from Scrapers.IMDB.imdb_scraper import IMDBScraper, IMDBScrapeMode
 from Scrapers.MyScraperLibrary.ScraperQuery import ScaperQuery
 from Scrapers.settings import FileListSettings
 
 
 class FileListScraper(ScaperQuery):
-    '''
+    """
         class that scrapes torrents from filelist
-    '''
+    """
 
     base_link = "https://filelist.io/"
     login = True
     user = FileListSettings.user
     password = FileListSettings.password
+
     # use_proxy = True
 
     def __init__(self):
         super().__init__()
-
 
     def check_good_login(self, soup: BeautifulSoup, data: dict):
 
@@ -37,13 +37,13 @@ class FileListScraper(ScaperQuery):
                             f"\n username: {data['username']} \n password: {data['password']} ")
 
     def get_query_link(self, movie_name: str):
-        self.imdb_id, self.duration = IMDBScreaper().scrape(movie_name, IMDBScrapeMode.ID_DURATION)
+        self.imdb_id, self.duration = IMDBScraper().scrape(movie_name, IMDBScrapeMode.ID_DURATION)
         return f"/browse.php?search={self.imdb_id}&cat=0&searchin=3&sort=2"
 
     def handle_torrent(self, soup: BeautifulSoup):
-        '''
+        """
             returns a FileListTorrent given the html of one of the results of the search
-        '''
+        """
         columns = soup.find_all("div", class_="torrenttable")
 
         torrent_colum = columns[1]
@@ -75,10 +75,10 @@ class FileListScraper(ScaperQuery):
             duration=movie_duration,
         )
 
-    def handle_query_result(self, query_url: str, soup: BeautifulSoup, scrape_enum = None):
-        '''
+    def handle_query_result(self, query_url: str, soup: BeautifulSoup, scrape_enum=None):
+        """
             gets the torrent data from the query reponse
-        '''
+        """
         all_soup_results = soup.find_all("div", {"class": "torrentrow"})
         torrent_list = [self.handle_torrent(soup) for soup in all_soup_results]
         if not torrent_list:
