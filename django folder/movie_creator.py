@@ -3,7 +3,7 @@ import django
 django.setup()
 
 import csv
-from app.Scrapers.IMDB.imdb_scraper import IMDBScreaper
+from app.Scrapers.IMDB.imdb_scraper import IMDBScraper
 from movieapp.models import Movie, Title, Genretypes
 from multiprocessing import Pool
 
@@ -16,7 +16,7 @@ def push_movies():
         for line in f:
             movie_name = line.strip()
             try:
-                data = IMDBScreaper().scrape(movie_name)
+                data = IMDBScraper().scrape(movie_name)
             except:
                 continue
             print(data.duration.minutes)
@@ -68,7 +68,7 @@ def get_movie_with_id(imdb_id):
     return movie
 
 
-scraper = IMDBScreaper()
+scraper = IMDBScraper()
 
 
 def handle_movie(id):
