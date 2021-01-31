@@ -1,4 +1,5 @@
 import os
+import random
 from abc import abstractmethod
 from dataclasses import dataclass
 from typing import Callable
@@ -6,15 +7,13 @@ from typing import Callable
 import requests
 from bs4 import BeautifulSoup
 from fp.fp import FreeProxy
+from scraper_api import ScraperAPIClient
 
 from Scrapers.settings import Download
 
-class ScraperMode:
-    pass
-
 
 @dataclass
-class ScaperQuery():
+class ScaperQuery:
     base_link = "www.example.com"
 
     login = False
@@ -22,15 +21,22 @@ class ScaperQuery():
     password = "pass"
     use_proxy = False
 
-    use_session = False
-    use_requests = True
+    use_scraperapi = False
 
     debug = False
     download_dir = Download.download_folder
 
     headers = {
-        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36",
+        "Content-Language": "en-US",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36",
     }
+    user_agent_list = [
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.1 Safari/605.1.15',
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:77.0) Gecko/20100101 Firefox/77.0',
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36',
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:77.0) Gecko/20100101 Firefox/77.0',
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36',
+    ]
 
     def __init__(self):
         if self.debug:
@@ -41,17 +47,20 @@ class ScaperQuery():
         self.query_name = ""
         self.session = requests.session()  # create a session
         self.session.headers = self.headers
+        if self.use_scraperapi:
+            self.client = ScraperAPIClient('827a189a13edb3490a8ea907a6f61d47')
 
         if self.use_proxy:
             proxy = FreeProxy(rand=True).get()
-            print(f"USing proxi {proxy}")
+            print(f"USing proxy {proxy}")
             self.session.proxies = {
                 "http": proxy,
             }
 
+
     def parse_url(self, url):
         if not url.startswith(self.base_link):
-            url = self.base_link + url  # ad the base_link to make it obsolute
+            url = self.base_link + url  # ad the base_link to make it absolute
         return url
 
     def get_or_create_debug_html(self, url, request):
@@ -61,9 +70,9 @@ class ScaperQuery():
         if not os.path.exists(debug_folder):
             os.mkdir(debug_folder)
 
-        paramenters = url.replace(self.base_link + '/', "").replace("?","")
-        print("Splitting", paramenters)
-        file_name = f'{self.query_name} cached {paramenters}.html'
+        parameters = url.replace(self.base_link + '/', "").replace("?", "")
+        print("Splitting", parameters)
+        file_name = f'{self.query_name} cached {parameters}.html'
         html_file = os.path.join(debug_folder, file_name)
         print(html_file)
 
@@ -79,20 +88,28 @@ class ScaperQuery():
                 content = file.read()
         return content
 
+    def rotate_agents(self):
+        user_agent = random.choice(self.user_agent_list)
+        self.headers['User-Agent'] = user_agent
+
     def get_soup_from_url(self, url: str, data=None):
+        self.rotate_agents()
         url = self.parse_url(url)
-        request = self.session.get(url, data=data)
-        if request.status_code == 404:
-            raise Exception(f"Request to {url} gives 404 error!")
+        if not self.use_scraperapi:
+            print(f"Using basic requests get on {url}")
+            request = self.session.get(url, data=data)
+        else:
+            request = self.client.get(url)
         request_content = request.content
         if self.debug:
             request_content = self.get_or_create_debug_html(url, request)
         return BeautifulSoup(request_content, "lxml")
 
-    def split_query_name(self, query_name: str):
+    @staticmethod
+    def split_query_name(query_name: str):
         return query_name.replace(" ", "+")
 
-    def check_good_login(self, soup : BeautifulSoup, data: dict):
+    def check_good_login(self, soup: BeautifulSoup, data: dict):
         pass
 
     def log_in(self, user, password):
@@ -112,7 +129,7 @@ class ScaperQuery():
             soup=self.get_soup_from_url(self.base_link),
             data=data)  # will raise exception if the login failed
 
-    def scrape(self, query_name: str, scrape_enum = 0):
+    def scrape(self, query_name: str, scrape_enum=0):
         self.query_name = query_name
 
         if self.login:
@@ -142,7 +159,7 @@ class ScaperQuery():
         pass
 
     @abstractmethod
-    def handle_query_result(self, query_url: str, soup: BeautifulSoup, scrape_enum = 0):
+    def handle_query_result(self, query_url: str, soup: BeautifulSoup, scrape_enum=0):
         pass
 
     def filter_result(self, html: BeautifulSoup):
