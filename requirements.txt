@@ -15,7 +15,6 @@ fake-useragent==0.1.11
 filelock==3.0.12
 free-proxy==1.0.2
 idna==2.10
-importlib-metadata==3.1.1
 jdcal==1.4.1
 lxml==4.6.2
 MouseInfo==0.1.3
