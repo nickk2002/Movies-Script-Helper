@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Movie</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css" type="text/css">
+        <script>
+            var files = ["images/tom cruise.jpg","images/thor image background.jpg","images/james bond.jpg"]
+            function assign_random_picture(){
+                let cast = document.getElementById("cast");
+                let actors = document.getElementsByClassName("actor");
+                for(let i = 0; i < actors.length; i++){
+                    let actor = actors[i];
+                    console.log(actor.innerHTML);
+
+                    let item = files[Math.floor(Math.random() * files.length)];
+                    let photo = actor.getElementsByClassName("photo")[0];
+                    let path = "url(" + item + ")";
+                    //                    console.log(path);
+                    //                    console.log(photo);
+                    photo.style.backgroundImage = "url(images/tom cruise.jpg)";
+                    //                    console.log(photo.style.backgroundImage);
+                }
+            }
+            window.onload = function(){
+                assign_random_picture();
+            }
+        </script>
+    </head>
+
+
+    <body>
+        <div class="navigation">
+            <ul>
+                <li>Home</li>
+                <li>Advanced Search</li>
+                <li>Login</li>
+                <li>Register</li>
+            </ul>
+        </div>
+
+        <div class="frame">
+            <div class="empty_div">
+            </div>
+            <div class="horizontal_flex">
+                <div id="movie_photo"> 
+                    <div id="plot">Plot</div>
+                    <div id="plot_text">Blacksmith Will Turner teams up with eccentric pirate "Captain" Jack Sparrow to save his love, the governor's daughter, from Jack's former pirate allies, who are now undead.</div>
+                </div>
+
+                <div class="information">
+                    <div id="name">Pirates of the Caraibbean</div>
+                    <div id="subtext">The Course of the Black Perl
+                        <div id="year">(2003)</div>  
+                    </div>
+
+                    <ul id="genres">
+                        <li>Adventure</li>
+                        <li>Drama</li>
+                        <li>Sci-Fi</li>
+                    </ul>
+                    <ul id="available-ls">
+                        <li id="available">Available on</li>
+                        <li class="place">Netflix</li>
+                        <li class="place">Disney</li>
+                    </ul>
+
+                    <div class="info" id='rating'>
+                        Rating
+                        <div class="value">8.5</div>
+                    </div>
+                    <div class="info" id='votes'>
+                        Votes
+                        <div class="value">525,219</div>
+                    </div>                    
+                    <div class="info" id='reviews'>
+                        Reviews
+                        <div class="value">2,419</div>
+                    </div>
+                </div>   
+
+
+                <div id="cast">
+                    <div id="director_text" class="yellow_text">Director
+                    </div> 
+
+                    <div class="actor" >
+                        <div class="photo"></div>
+                        <div class="name">Franco Zeffirelli</div>
+                    </div>
+                    <div id="cast_text" class="yellow_text">Cast
+                    </div> 
+                    <div class="actor">
+                        <div class="photo"></div>
+                        <div class="name">Franco Zeffirelli</div>
+                    </div>
+                    <div class="actor">
+                        <div class="photo"></div>
+                        <div class="name">Franco Zeffirelli</div>
+                    </div>
+                    <div class="actor">
+                        <div class="photo"></div>
+                        <div class="name">Franco Zeffirelli</div>
+                    </div>
+                    <div class="actor">
+                        <div class="photo"></div>
+                        <div class="name">Franco Zeffirelli</div>
+                    </div>
+                    <div class="actor">
+                        <div class="photo"></div>
+                        <div class="name">Franco Zeffirelli</div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+
+
+        </div>
+    </body>
+
+</html>

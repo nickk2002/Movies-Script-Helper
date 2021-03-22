@@ -15,7 +15,7 @@ class VaccinScraper:
     user = "n_filat@yahoo.com"
     password = "Niculin@2021"
     login_url = "https://programare.vaccinare-covid.gov.ro/auth/login"
-    base_url = 'https://programare.vaccinare-covid.gov.ro/#/planning/recipient/2906458'
+    base_url = 'https://programare.vaccinare-covid.gov.ro/#/appointment/new/2906458'
     submit_delay = 3
 
     def __init__(self):

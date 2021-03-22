@@ -27,8 +27,8 @@ class ScaperQuery:
     download_dir = Download.download_folder
 
     headers = {
-        "Content-Language": "en-US",
-        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) "
+                      "Chrome/83.0.4103.97 Safari/537.36",
     }
     user_agent_list = [
         'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.1.1 Safari/605.1.15',
@@ -36,6 +36,10 @@ class ScaperQuery:
         'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36',
         'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:77.0) Gecko/20100101 Firefox/77.0',
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.97 Safari/537.36',
+    ]
+
+    proxies = [
+
     ]
 
     def __init__(self):
@@ -56,7 +60,11 @@ class ScaperQuery:
             self.session.proxies = {
                 "http": proxy,
             }
-
+        if self.proxies:
+            self.session.proxies = {
+                "https": self.proxies[0]
+            }
+            print("Using custom proxy", self.proxies[0])
 
     def parse_url(self, url):
         if not url.startswith(self.base_link):
@@ -159,7 +167,7 @@ class ScaperQuery:
         pass
 
     @abstractmethod
-    def handle_query_result(self, query_url: str, soup: BeautifulSoup, scrape_enum=0):
+    def handle_query_result(self, query_url: str, soup: BeautifulSoup, scrape_enum):
         pass
 
     def filter_result(self, html: BeautifulSoup):

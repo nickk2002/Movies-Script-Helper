@@ -25,7 +25,7 @@ def change_encoding_to_utf8(path):
 
 
 def check_if_already_modified(path, modified_pattern):
-    with open(path, 'r', encoding='utf-8', errors='ignore') as file:
+    with open(path, 'r', encoding='utf-8') as file:
         for (index, line) in enumerate(file):
             # verific linia a 3 a daca contine mod
             try:
@@ -45,11 +45,12 @@ def convert_line_diactritice(line):
 
 
 def run_subtitles_diactritice(path,file_name):
+    change_encoding_to_utf8(path)
     if check_if_already_modified(path, "MODIFIED#0"):
         print(crayons.green(f"{file_name} is already Modified"))
         return False
 
-    change_encoding_to_utf8(path)
+
     diactritice_text = str()
     with open(path, 'r', encoding='utf-8') as file:
         for line in file:
@@ -73,7 +74,14 @@ def run_subtitle_replace_dir(directory):
             path = subdir + os.sep + file
             if file.endswith(".srt"):
                 subtitles += 1
+                print(file)
                 status = run_subtitles_diactritice(path,file)
                 if status:
                     subtitles_modifed += 1
-    print(f"Discovered {subti}")
+    print(f"Discovered {subtitles}. And modified {subtitles_modifed}")
+
+file = r"E:\Quick access\Desktop\www.subs.ro_marco-polo-sezonul-1-2014\Marco.Polo.2014.S01.720p.BluRay.x264-DEMAND"
+# run_subtitle_replace_dir(file)
+with open("E:\Quick access\Desktop\www.subs.ro_marco-polo-sezonul-1-2014\Marco.Polo.2014.S01.720p.BluRay.x264-DEMAND",'w') as f:
+    pass
+# run_subtitles_diactritice(file,"Marco.Polo.2014.S01.720p.BluRay.x264-DEMAND")

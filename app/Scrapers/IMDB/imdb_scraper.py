@@ -9,6 +9,7 @@ import regex as re
 from bs4 import BeautifulSoup
 
 from Scrapers.MyScraperLibrary.ScraperQuery import ScaperQuery
+from Scrapers.helpers import append_df_to_excel
 
 
 class IMDBScrapeMode(enum.Enum):
@@ -62,6 +63,7 @@ class IMDBScraper(ScaperQuery):
     # use_proxy = True
 
     # use_scraperapi = True
+    # proxies = ["51.158.68.133:8811"]
 
     def get_query_link(self, query_name):
         return f"/find?q={query_name}&s=tt&ref_=fn_tt_ex&exact=true&ttype=ft"
@@ -105,6 +107,8 @@ class IMDBScraper(ScaperQuery):
     def get_imdb_id_duration(self, url, soup: BeautifulSoup):
         imdb_id = self.parse_number(url)
         result = str(soup.select('div.txt-block>time'))
+        if result is None:
+            result = str(soup.select("div.subtext>time"))
         duration = int(self.parse_number(result))
         return imdb_id, duration
 
@@ -123,11 +127,24 @@ class IMDBScraper(ScaperQuery):
     @staticmethod
     def get_release_day(soup: BeautifulSoup):
         # release day
+
         release_day_soup = soup.find('a', title="See more release dates")
+        if release_day_soup is None:
+            return None
         release_day = release_day_soup.get_text()  # Release Day 6 May 2011 (Romania)
         # remove the parens
         release_day = release_day[0:release_day.find('(')].strip()  # Release Day 6 May 2011
         return release_day
+
+    def get_movie_duration(self, soup: BeautifulSoup):
+        result = soup.select_one('div.txt-block>time')
+        if result is None:
+            result = soup.select_one("div.subtext>time")
+        if result is None:
+            return None
+        result = result.text.strip()
+        duration = int(self.parse_number(result))
+        return duration
 
     def get_general_movie_data(self, soup: BeautifulSoup):
         general_movie_elements = soup.find_all(class_="credit_summary_item")
@@ -136,14 +153,27 @@ class IMDBScraper(ScaperQuery):
             actual_text = person_soup.get_text().strip().replace('\n', ' ')
             person_url = person_soup.a['href']
             person_id = int(self.parse_number(person_url))
-            field_name, values = actual_text.split(':')
+            split_pos = actual_text.find(':')
+            field_name = actual_text[:split_pos]
+            values = actual_text[split_pos + 1:]
             if not field_name.endswith('s'):
                 field_name += 's'
-            values = [(name.strip(), person_id) for name in values.split(',')]
+
+            def remove_see_full_cast_from_name(name):
+                pattern = "| See full cast"
+                if pattern in name:
+                    return name[0: name.find(pattern)]
+                return name
+
+            values = [(remove_see_full_cast_from_name(name.strip()), person_id) for name in values.split(',')]
+
+            # values = map(remove_see_full_cast_from_name,values)
             general_movie_data[field_name] = values
+        print(general_movie_data)
         return general_movie_data
 
-    def parse_scraped_data(self, scraped_data: dict):
+    @staticmethod
+    def parse_scraped_data(scraped_data: dict):
         """
             returns a dict to excel, joining lists to strings
         """
@@ -157,6 +187,8 @@ class IMDBScraper(ScaperQuery):
         return scraped_data
 
     def full_scrape(self, url, soup: BeautifulSoup):
+        # if soup.find(text=re.compile("too fast")):
+        #     raise Exception("Too fast requests warning", soup)
         error_404 = soup.find(class_="error_code_404")
         if error_404:
             raise IMDB404Error("There is no movie at the url", url)
@@ -165,8 +197,7 @@ class IMDBScraper(ScaperQuery):
 
         year = self.get_year(soup)
         release_day = self.get_release_day(soup)
-        if soup.find(text=re.compile("too fast")):
-            raise Exception("Too fast requests warning")
+
         name = soup.find("div", class_="title_wrapper").h1.text
         print("Title:", name)
 
@@ -197,6 +228,9 @@ class IMDBScraper(ScaperQuery):
             for cast_row in cast_rows:
                 # get the star name + id
                 star_part = cast_row.find("td", class_="").a
+                if not star_part:
+                    # we have a row that does not have any link
+                    continue
                 url = star_part['href']
                 star_name = star_part.get_text().strip()
                 star_id = self.parse_number(url)
@@ -246,8 +280,7 @@ class IMDBScraper(ScaperQuery):
         total_gross = info_values.get("Cumulative Worldwide Gross")
         language = info_values.get('Language')
         filming_locations = info_values.get('Filming Locations')
-        result = str(soup.select('div.txt-block>time'))
-        duration = self.parse_number(result)
+        duration = self.get_movie_duration(soup)
 
         information = {
             "id": imdb_id,
@@ -269,7 +302,7 @@ class IMDBScraper(ScaperQuery):
             "total_gross": total_gross,
             "duration": duration,
         }
-        return self.parse_scraped_data(information)
+        return information
         return IMDBData(
             id=imdb_id,
             name=name,
@@ -300,7 +333,7 @@ class IMDBScraper(ScaperQuery):
 
 def scraping_threading(start_index, end_index):
     scraper = IMDBScraper()
-    with ThreadPoolExecutor(max_workers=50) as executor:
+    with ThreadPoolExecutor(max_workers=100) as executor:
         future_data = [executor.submit(scraper.get_information, imdb_id) for imdb_id in range(start_index, end_index)]
         scraped_data = []
         start_time = time.time()
@@ -314,16 +347,53 @@ def scraping_threading(start_index, end_index):
     return scraped_data
 
 
-if __name__ == "__main__":
+def scrape_normal():
+    scraper = IMDBScraper()
+    scraped_data = []
+    start_time = time.time()
 
-    #     # information = []
-    #         # information.append(scraper.get_information(i))
+    file_name = 'imdb_data.xlsx'
 
-    file_name = 'imdb_data.csv'
-    increment = 200
-    start_id = 1400
-    for i in range(start_id, start_id + increment * 2, increment):
-        information = list(scraping_threading(i, i + 200))
+    df = pd.read_excel(file_name, engine='openpyxl')
+    ids = df['id'].values.sort()
+    last_id = int(ids[len(ids) - 1])
+    for id in range(last_id, 100000):
+        try:
+            data = scraper.get_information(id)
+            scraped_data.append(data)
+        except IMDB404Error:
+            continue
+    # print("For scraping", end_index - start_index + 1, "pages it took", time.time() - start_time, "seconds")
+    return scraped_data
+
+
+def scrape_to_excel():
+    file_name = 'imdb_data.xlsx'
+
+    df = pd.read_excel(file_name, engine='openpyxl')
+    ids = sorted(df['id'].values)
+    last_id = int(ids[len(ids) - 1])
+    start_id = last_id + 1
+    print("last id is",last_id)
+    start_time = time.time()
+    increment = 500
+    for i in range(start_id, start_id + increment * 100, increment):
+        information = list(scraping_threading(i, i + increment))
+        # sorted_information = sorted(information,key = lambda data : data['id'])
         df = pd.DataFrame(information)
-        df.to_csv(file_name, mode='a', encoding='utf-8', header=False)
-        print(f"Written to {file_name} {increment} movie entries")
+        append_df_to_excel(file_name, df, header=False, index=False)
+        print("putting data to excel")
+        print("Actual time from the start of the script is", time.time() - start_time, "scraped:", i - start_id)
+
+
+def debug_id(id):
+    scraper = IMDBScraper()
+    info = scraper.get_information(id)
+
+
+if __name__ == "__main__":
+    # debug_id(6468322)
+    scrape_to_excel()
+    # print(info)
+    # df = pd.DataFrame([info])
+    # append_df_to_excel('imdb_data.xlsx',df,header=False,index=False)
