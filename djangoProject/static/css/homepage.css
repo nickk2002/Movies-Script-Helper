@@ -1,0 +1,155 @@
+body {
+    background-color: white;
+    margin: 0;
+    padding: 0;
+}
+
+.navigation {
+    background-color: var(--my-red);
+    width: 100%;
+    height: 60px;
+}
+
+.navigation ul {
+    margin: 0;
+    padding-left: 50%;
+    height: 100%;
+    border: 1px solid blue;
+    list-style-type: none;
+    display: flex;
+}
+
+.navigation li {
+    padding-left: 80px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    color: white;
+    font: 16px Arial, sans-serif;
+}
+
+
+.search-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    height: 150px;
+}
+
+.frame {
+    background-color: var(--my-blue);
+    height: 2000px;
+    scroll-behavior: auto;
+    border-top: 2px solid black;
+}
+
+.search {
+    position: absolute;
+    top: 20px;
+    font: 40px Arial, sans-serif;
+    color: var(--my-red);
+}
+
+.welcome {
+    position: absolute;
+    top: 100px;
+    font: 30px Arial, sans-serif;
+    color: white;
+}
+
+.left-align {
+    padding-left: 250px;
+}
+
+.left-align ul {
+    padding: 0;
+    list-style-type: none;
+    margin: 0;
+    display: flex;
+}
+
+.left-align li {
+    padding-right: 100px;
+}
+
+.popular {
+    padding-top: 10px;
+    font: 20px Arial, sans-seif;
+    color: white;
+}
+
+.movie {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    width: 200px;
+}
+
+.rating {
+    position: relative;
+    top: 12px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.rectangle > .number {
+    color: white;
+}
+
+.rectangle {
+    display: flex;
+    text-align: center;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30px;
+    width: 20%;
+    height: 100%;
+    background-color: var(--my-yellow);
+}
+
+.info {
+    position: relative;
+}
+
+.name {
+    margin-top: 2px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 80%;
+    font: 16px Arial, sans-serif;
+    font-weight: bold;
+    color: white;
+
+}
+
+.year {
+    position: absolute;
+    top: 2px;
+    right: 0;
+    font: 16px Arial, sans-serif;
+    font-weight: bold;
+    color: white;
+}
+
+.genres {
+    margin-top: 2px;
+    color: #7F9FB5;
+    font: 14px Arial, sans-serif;
+    width: 100%;
+    overflow: hidden;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+    max-height: 14px;
+    line-height: 14px;
+}
+
+
+:root {
+    --my-red: #F83745;
+    --my-blue: #02485E;
+    --my-yellow: #FFB10A;
+}
