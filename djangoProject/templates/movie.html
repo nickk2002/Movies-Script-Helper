@@ -7,22 +7,30 @@
     <link rel="stylesheet" href="{% static 'css/movie.css' %}?{% cache_bust %}" type="text/css">
 
     <style>
+        :root {
+            --my-red: #F83745;
+            --my-blue: #02485E;
+            --my-yellow: #FFB10A;
+            --my-green: #00FF3C;
+            --arial: 20px Arial, sans-serif;
+            --padd-left: 100px;
+        }
+
         #movie_photo {
             flex-direction: row;
             margin-top: 0;
             width: 400px;
             height: 600px;
-        {#border: 1px solid white;#} background-image: url("https://www.themoviedb.org/t/p/original/{{ movie.poster_path }}");
+            background-image: url("https://www.themoviedb.org/t/p/original/{{ movie.poster_path }}");
             background-size: cover;
             background-position: center;
             color: var(--my-blue);
         }
 
         .frame {
-
             background-position: center;
-            height: 100vh;
-        {#border-top: 1px solid black;#} padding-left: 100px;
+            height: 90%;
+            padding-left: var(--padd-left);
             display: flex;
             flex-direction: column;
             font: var(--arial);
@@ -35,7 +43,7 @@
             width: 100%;
             z-index: -1;
             background: linear-gradient(to right, rgba(12.16%, 14.12%, 24.31%, 1.00) 150px, rgba(12.16%, 14.12%, 24.31%, 0.84) 100%),
-                url("https://www.themoviedb.org/t/p/original/{{ movie.background_path }}");
+            url("https://www.themoviedb.org/t/p/original/{{ movie.background_path }}");
             background-size: cover;
             background-position: center;
         }
@@ -76,9 +84,16 @@
 
             <div id="plot">Plot</div>
             <div id="plot_text">{{ movie.description }}</div>
-            <div class="director">Director
-            </div>
-            <div class="director_name"> Christopher Nolan</div>
+            <ul class="directors">
+                {% for director in movie.get_directors %}
+                    <li>
+                        <div class="director">Director
+                        </div>
+                        <div class="director_name"> {{ director }} </div>
+                    </li>
+                {% endfor %}
+            </ul>
+
         </div>
 
 
@@ -86,5 +101,24 @@
 
 
 </div>
-</body>
+<div class="empty_whitespace"></div>
+<div class="left_align">
+    <h1>Top Billed Cast</h1>
+    <ul class="cast">
+        {% for person,character in movie.get_actors %}
+            <li>
+                <div class="person">
+                    <div class="person_image">
+                        <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/{{ person.image_path }}"
+                             alt="Image"/>
+                    </div>
+                    <div class="name">{{ person.name }}</div>
+                    <p>{{ character }}</p>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
 
+</div>
+
+</body>

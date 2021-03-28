@@ -37,15 +37,6 @@ body {
 
 
 
-:root {
-    --my-red: #F83745;
-    --my-blue: #02485E;
-    --my-yellow: #FFB10A;
-    --my-green: #00FF3C;
-    --arial: 20px Arial, sans-serif;
-}
-
-
 .empty_div {
     width: 100%;
     height: 100px;
@@ -99,8 +90,9 @@ ul {
 }
 #genres ul {
     margin-top: 0;
-    /*border: 1px solid red;*/
     font-size: 20px;
+    font-weight: bold;
+    border: 1px solid red;
 }
 
 .information ul li {
@@ -118,10 +110,11 @@ ul {
 
 
 #plot {
-    margin-top: 100px;
+    margin-top: 90px;
     font-weight: bold;
     font: 40px Arial, sans-serif;
     color: white;
+    border: 1px solid #350f0f;
 }
 
 #plot_text {
@@ -129,37 +122,58 @@ ul {
     font: 20px Arial, sans-serif;
 }
 
-.director{
+.directors{
+    display: flex;
     margin-top: 100px;
+    border: 1px solid red;
+    width: 80%;
+    flex-wrap: wrap;
+    /*justify-content: space-around;*/
+}
+
+.directors > li{
+    border: 1px solid green;
+    margin-right: 200px;
+    margin-bottom: 50px;
+}
+.director{
     font: 30px Arial, sans-serif;
 }
 .director_name{
     margin-top: 10px;
     font: 20px Arial, sans-serif;
 }
-.actor {
-    margin-top: 10px;
+.empty_whitespace{
+    height: 2%;
+}
+.left_align{
+    padding-left: var(--padd-left);
+    height: 100%;
+}
+.cast{
     display: flex;
+    flex-wrap: wrap;
 }
-
-.actor > .photo {
-    width: 35px;
-    height: 35px;
-    /*background-image: url(images/Franco%20Zeffirelli.jpg);*/
-    background-size: cover;
-    background-position: center;
-    border: 2px solid #707070;
-    border-radius: 25px;
+.person{
+    width: 170px;
+    height: 300px;
+    border: 1px solid red;
+    margin-right: 10px;
+    margin-bottom: 10px;
 }
-
-.actor > .name {
-    font: 20px Arial, sans-serif;
-    margin-left: 10px;
-    align-self: center;
-    color: white;
+.person_image{
+    height: 80%;
+    border: 1px solid #60802e;
 }
-
-#cast_text {
-    margin-top: 40px;
+.person_image img{
+    height: 100%;
+    width: 100%;
 }
-
+.person .name{
+    margin-top: 0;
+    font-size: 17px;
+    font-weight: bold;
+}
+.person p{
+    margin-bottom: 0;
+}

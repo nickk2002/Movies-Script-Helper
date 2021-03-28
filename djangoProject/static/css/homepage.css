@@ -48,12 +48,12 @@ body {
     position: absolute;
     top: 20px;
     font: 60px Arial, sans-serif;
-    color: var(--my-red);
+    color: #0a1e80;
 }
 
 .welcome {
     position: absolute;
-    top: 100px;
+    top: 150px;
     font: 40px Arial, sans-serif;
     color: white;
 }

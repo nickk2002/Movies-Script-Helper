@@ -38,8 +38,7 @@
 
 <div class="frame">
     <div class="search-wrapper">
-        <div class="search">Seach Movies From IMDB
-        </div>
+        <div class="search">Search and Preview Movies</div>
         <div class="welcome">Welcome to my website</div>
 
     </div>
@@ -47,7 +46,7 @@
     <div class="left-align">
         <p class="popular">Popular</p>
         <ul id="movie list">
-            {% for movie in movies|slice:"4" %}
+            {% for movie in movies|slice:"5:9" %}
                 <li>
                     <div class="movie">
                         <div class="movie-image">
@@ -65,6 +64,7 @@
 
                                     <div class="genre">{{ genre }}</div>
                                 {% endfor %}
+
                             </div>
                         </div>
                     </div>
