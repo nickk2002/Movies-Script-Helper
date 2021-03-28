@@ -1,8 +1,9 @@
+{% load cache_bust %}
 {% load static %}
 
 <head>
     <title>Title of the document</title>
-    <link rel="stylesheet" href="{% static 'css/homepage.css' %}">
+    <link rel="stylesheet" href='{% static 'css/homepage.css' %}?{% cache_bust %}'>
 </head>
 
 
@@ -49,15 +50,11 @@
             {% for movie in movies|slice:"4" %}
                 <li>
                     <div class="movie">
-                        <div class="image-rating">
-                            <div class="rating">
-                                <div class="rectangle">
-                                    <div class="number">{{ movie.rating }}</div>
-                                </div>
-                            </div>
-                            <div class="movie-image">
-                                <img src="https://image.tmdb.org/t/p/w185/{{ movie.poster_path }}" alt="Thor image"
-                                     width="200" height="300">
+                        <div class="movie-image">
+                            <img src="https://image.tmdb.org/t/p/w185/{{ movie.poster_path }}" alt="Thor image"
+                                 width="270" height="400">
+                            <div class="rectangle">
+                                <div class="number">{{ movie.rating }}</div>
                             </div>
                         </div>
                         <div class="info">
@@ -65,7 +62,8 @@
                             <div class="year"> {{ movie.get_year }}</div>
                             <div class="genres">
                                 {% for genre in movie.get_genres %}
-                                    {{ genre }}
+
+                                    <div class="genre">{{ genre }}</div>
                                 {% endfor %}
                             </div>
                         </div>
@@ -73,34 +71,7 @@
                 </li>
             {% endfor %}
         </ul>
-        <ul id="movie list">
-            {% for movie in movies|slice:"5:9" %}
-                <li>
-                    <div class="movie">
-                        <div class="image-rating">
-                            <div class="rating">
-                                <div class="rectangle">
-                                    <div class="number">{{ movie.rating }}</div>
-                                </div>
-                            </div>
-                            <div class="movie-image">
-                                <img src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}" alt="Thor image"
-                                     width=200" height="300">
-                            </div>
-                        </div>
-                        <div class="info">
-                            <div class="name"> {{ movie.name }}</div>
-                            <div class="year"> {{ movie.get_year }}</div>
-                            <div class="genres">
-                                {% for genre in movie.get_genres %}
-                                    {{ genre }}
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            {% endfor %}
-        </ul>
+
     </div>
 
 </div>

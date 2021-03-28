@@ -1,31 +1,46 @@
-{%  load static %}
-<!DOCTYPE html>
+{% load static %}
+{% load cache_bust %}
+
 <head>
     <title>Movie</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/movie.css' %}" type="text/css">
-    <script>
-        var files = ["images/tom cruise.jpg","images/thor image background.jpg","images/james bond.jpg"]
-        function assign_random_picture(){
-            let cast = document.getElementById("cast");
-            let actors = document.getElementsByClassName("actor");
-            for(let i = 0; i < actors.length; i++){
-                let actor = actors[i];
-                console.log(actor.innerHTML);
+    <link rel="stylesheet" href="{% static 'css/movie.css' %}?{% cache_bust %}" type="text/css">
 
-                let item = files[Math.floor(Math.random() * files.length)];
-                let photo = actor.getElementsByClassName("photo")[0];
-                let path = "url(" + item + ")";
-                //                    console.log(path);
-                //                    console.log(photo);
-                photo.style.backgroundImage = "url(images/tom cruise.jpg)";
-                //                    console.log(photo.style.backgroundImage);
-            }
+    <style>
+        #movie_photo {
+            flex-direction: row;
+            margin-top: 0;
+            width: 400px;
+            height: 600px;
+        {#border: 1px solid white;#} background-image: url("https://www.themoviedb.org/t/p/original/{{ movie.poster_path }}");
+            background-size: cover;
+            background-position: center;
+            color: var(--my-blue);
         }
-        window.onload = function(){
-            assign_random_picture();
+
+        .frame {
+
+            background-position: center;
+            height: 100vh;
+        {#border-top: 1px solid black;#} padding-left: 100px;
+            display: flex;
+            flex-direction: column;
+            font: var(--arial);
+            color: white;
         }
-    </script>
+
+        #bg_image {
+            position: absolute;
+            height: 90%;
+            width: 100%;
+            z-index: -1;
+            background: linear-gradient(to right, rgba(12.16%, 14.12%, 24.31%, 1.00) 150px, rgba(12.16%, 14.12%, 24.31%, 0.84) 100%),
+                url("https://www.themoviedb.org/t/p/original/{{ movie.background_path }}");
+            background-size: cover;
+            background-position: center;
+        }
+
+    </style>
 </head>
 
 
@@ -38,85 +53,36 @@
         <li>Register</li>
     </ul>
 </div>
-
+<div id="bg_image">
+</div>
 <div class="frame">
-    <div class="empty_div">
-    </div>
+
+    <div class="empty_div"></div>
     <div class="horizontal_flex">
-        <div id="movie_photo">
-            <div id="plot">Plot</div>
-            <div id="plot_text">Blacksmith Will Turner teams up with eccentric pirate "Captain" Jack Sparrow to save his love, the governor's daughter, from Jack's former pirate allies, who are now undead.</div>
-        </div>
+
+        <div id="movie_photo"></div>
 
         <div class="information">
-            <div id="name">Pirates of the Caraibbean</div>
-            <div id="subtext">The Course of the Black Perl
-                <div id="year">(2003)</div>
+            <div id="name">
+                {{ movie.name }}
+                <div id="year"> ({{ movie.get_year }})</div>
             </div>
-
             <ul id="genres">
-                <li>Adventure</li>
-                <li>Drama</li>
-                <li>Sci-Fi</li>
-            </ul>
-            <ul id="available-ls">
-                <li id="available">Available on</li>
-                <li class="place">Netflix</li>
-                <li class="place">Disney</li>
+                {% for genre in movie.get_genres %}
+                    <li>{{ genre }}</li>
+                {% endfor %}
+                <li id="duration">1h 30 min</li>
             </ul>
 
-            <div class="info" id='rating'>
-                Rating
-                <div class="value">8.5</div>
+            <div id="plot">Plot</div>
+            <div id="plot_text">{{ movie.description }}</div>
+            <div class="director">Director
             </div>
-            <div class="info" id='votes'>
-                Votes
-                <div class="value">525,219</div>
-            </div>
-            <div class="info" id='reviews'>
-                Reviews
-                <div class="value">2,419</div>
-            </div>
+            <div class="director_name"> Christopher Nolan</div>
         </div>
 
-
-        <div id="cast">
-            <div id="director_text" class="yellow_text">Director
-            </div>
-
-            <div class="actor" >
-                <div class="photo"></div>
-                <div class="name">Franco Zeffirelli</div>
-            </div>
-            <div id="cast_text" class="yellow_text">Cast
-            </div>
-            <div class="actor">
-                <div class="photo"></div>
-                <div class="name">Franco Zeffirelli</div>
-            </div>
-            <div class="actor">
-                <div class="photo"></div>
-                <div class="name">Franco Zeffirelli</div>
-            </div>
-            <div class="actor">
-                <div class="photo"></div>
-                <div class="name">Franco Zeffirelli</div>
-            </div>
-            <div class="actor">
-                <div class="photo"></div>
-                <div class="name">Franco Zeffirelli</div>
-            </div>
-            <div class="actor">
-                <div class="photo"></div>
-                <div class="name">Franco Zeffirelli</div>
-            </div>
-
-        </div>
 
     </div>
-
-
-
 
 
 </div>

@@ -28,6 +28,7 @@ class Movie(models.Model):
     duration = models.PositiveIntegerField(null=True)
     is_series = models.NullBooleanField()
     poster_path = models.CharField(null=True, max_length=100)
+    background_path = models.CharField(null=True, max_length=100)
 
     # pictures = models.
 
@@ -37,7 +38,10 @@ class Movie(models.Model):
     def get_genres(self):
         genre_list = []
         for category in Category.objects.filter(movie_id=self.id):
-            genre_list.append(Genre.objects.get(id=category.genre_id).name)
+            genre_name = Genre.objects.get(id=category.genre_id).name
+            if genre_name == "Science Fiction":
+                genre_name = "SF"
+            genre_list.append(genre_name)
         return genre_list
 
 

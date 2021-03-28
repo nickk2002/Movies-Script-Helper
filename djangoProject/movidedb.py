@@ -1,3 +1,5 @@
+import json
+
 import django
 
 django.setup()
@@ -26,7 +28,6 @@ def get_movies_by_votes():
     info = requests.get(url).json()
     results = [result['id'] for result in info['results']]
     return results
-
 
 
 def push_to_db(data):
@@ -98,17 +99,26 @@ def push_to_db(data):
 def run_movies():
     result_ids = get_movies_by_votes()
     for movie_id in result_ids[:10]:
-
         data = get_json(f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={api_key}")
         movie = Movie.objects.get(moviedb_id=movie_id)
         # push_to_db(data)
-        images = get_json(f"https://api.themoviedb.org/3/movie/{movie_id}/images?api_key={api_key}&sort_by=vote_average.desc&include_image_language=en,null")
+        images = get_json(
+            f"https://api.themoviedb.org/3/movie/{movie_id}/images?api_key={api_key}&include_image_language=en,null")
+        posters = images['posters']
+        posters.sort(key=lambda x: (x['vote_average'], x['vote_count']), reverse=True)
         first_image = images['posters'][0]
-        image_url = f"https://image.tmdb.org/t/p/w185{first_image['file_path']}"
-        print(data['title'], first_image,image_url)
+
+        backdrops = images['backdrops']
+        backdrops.sort(key=lambda x: (x['vote_average'], x['vote_count']), reverse=True)
+        first_background = backdrops[0]
+
+        image_url = f"https://image.tmdb.org/t/p/original{first_image['file_path']}"
+        background_url = f"https://image.tmdb.org/t/p/original{first_background['file_path']}"
+        print(data['title'], image_url, background_url)
         movie.poster_path = first_image['file_path']
+        movie.background_path = first_background['file_path']
+        print(json.dumps(backdrops, indent=5))
         movie.save()
-#
-# for category in Category.objects.select_related('movie','genre'):
-#     print(Movie.objects.get(id = category.movie_id).name, Genre.objects.get(id=category.genre_id).name)
+
+
 run_movies()
