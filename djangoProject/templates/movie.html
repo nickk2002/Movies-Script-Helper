@@ -5,7 +5,56 @@
     <title>Movie</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/movie.css' %}?{% cache_bust %}" type="text/css">
+    <link rel="script" href="{% static 'scripts/scroll.js' %}?{% cache_bust %}">
+    <link rel="script" href="{% static 'scripts/scroll.js' %}?{% cache_bust %}">
+    <script>
 
+        function do_scroll() {
+            Math.Clamp = function (value, min, max) {
+                if (value < min) {
+                    return min;
+                } else if (value > max) {
+                    return max;
+                }
+
+                return value;
+            };
+
+            let lastMouseX;
+            let scrollDiv = document.getElementById("myscroll");
+            let marginLeft = scrollDiv.offsetLeft;
+            let cast = document.querySelector("#cast > ul");
+            let maxWidth = cast.getBoundingClientRect().width - scrollDiv.getBoundingClientRect().width;
+            console.log("max width", maxWidth);
+            let initialLeft;
+            let isDown = false;
+            scrollDiv.addEventListener('mousedown', function (e) {
+                isDown = true;
+                lastMouseX = e.clientX;
+                const rect = scrollDiv.getBoundingClientRect();
+                initialLeft = rect.x - marginLeft;
+                console.log("initial Left", initialLeft);
+            }, true);
+            document.addEventListener('mouseup', function () {
+                isDown = false;
+            }, true);
+
+            document.addEventListener('mousemove', function (e) {
+                event.preventDefault();
+                if (isDown) {
+                    let newLeftValue = (e.clientX - lastMouseX + initialLeft);
+                    newLeftValue = Math.Clamp(newLeftValue, 0, maxWidth);
+                    scrollDiv.style.left = newLeftValue + 'px';
+                }
+            }, true);
+
+        }
+
+        window.onload = function () {
+            console.log("on load called");
+            do_scroll();
+        }
+    </script>
     <style>
         :root {
             --my-red: #F83745;
@@ -24,7 +73,12 @@
             background-image: url("https://www.themoviedb.org/t/p/original/{{ movie.poster_path }}");
             background-size: cover;
             background-position: center;
-            color: var(--my-blue);
+            box-shadow: white 0 0 10px;
+            border-radius: 5px;
+        }
+
+        #movie_photo:hover {
+            filter: blur(13px);
         }
 
         .frame {
@@ -39,7 +93,7 @@
 
         #bg_image {
             position: absolute;
-            height: 90%;
+            height: 100%;
             width: 100%;
             z-index: -1;
             background: linear-gradient(to right, rgba(12.16%, 14.12%, 24.31%, 1.00) 150px, rgba(12.16%, 14.12%, 24.31%, 0.84) 100%),
@@ -101,23 +155,28 @@
 
 
 </div>
-<div class="empty_whitespace"></div>
+
 <div class="left_align">
     <h1>Top Billed Cast</h1>
-    <ul class="cast">
-        {% for person,character in movie.get_actors %}
-            <li>
-                <div class="person">
-                    <div class="person_image">
-                        <img src="https://www.themoviedb.org/t/p/w600_and_h900_bestv2/{{ person.image_path }}"
-                             alt="Image"/>
+    <div id="cast">
+        <ul>
+            {% for person,character in movie.get_actors|slice:"8" %}
+                <li>
+                    <div class="person">
+                        <div class="person_image"
+                             style="background-image: url('https://www.themoviedb.org/t/p/original/{{ person.image_path }}');">
+                            {#                            <img src="https://www.themoviedb.org/t/p/original/{{ person.image_path }}"#}
+                            {#                                 alt="Image"/>#}
+                        </div>
+                        <div class="name">{{ person.name }}</div>
+                        <div class="character">{{ character }}</div>
                     </div>
-                    <div class="name">{{ person.name }}</div>
-                    <p>{{ character }}</p>
-                </div>
-            </li>
-        {% endfor %}
-    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+        <div id="myscroll"></div>
+    </div>
+
 
 </div>
 
