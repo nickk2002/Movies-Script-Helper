@@ -49,13 +49,17 @@
             {% for movie in movies|slice:"5:9" %}
                 <li>
                     <div class="movie">
-                        <div class="movie-image">
-                            <img src="https://image.tmdb.org/t/p/w185/{{ movie.poster_path }}" alt="Thor image"
-                                 width="270" height="400">
-                            <div class="rectangle">
-                                <div class="number">{{ movie.rating }}</div>
+                        <a href="/movie/{{ movie.id }}">
+                            <div class="movie-image">
+
+                                <img src="https://image.tmdb.org/t/p/w185/{{ movie.poster_path }}" alt="Thor image"
+                                     width="270" height="400">
+                                <div class="rectangle">
+                                    <div class="number">{{ movie.rating }}</div>
+                                </div>
                             </div>
-                        </div>
+                        </a>
+
                         <div class="info">
                             <div class="name"> {{ movie.name }}</div>
                             <div class="year"> {{ movie.get_year }}</div>

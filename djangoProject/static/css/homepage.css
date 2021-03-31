@@ -48,9 +48,8 @@ body {
     position: absolute;
     top: 20px;
     font: 60px Arial, sans-serif;
-    color: #0a1e80;
+    color: var(--my-red);
 }
-
 .welcome {
     position: absolute;
     top: 150px;
@@ -97,8 +96,6 @@ img{
 
 .movie-image{
     position: relative;
-
-
 }
 .rectangle > .number {
     color: white;
