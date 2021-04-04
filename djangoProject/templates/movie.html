@@ -4,56 +4,11 @@
 <head>
     <title>Movie</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/movie.css' %}?{% cache_bust %}" type="text/css">
-    <link rel="script" href="{% static 'scripts/scroll.js' %}?{% cache_bust %}">
-    <link rel="script" href="{% static 'scripts/scroll.js' %}?{% cache_bust %}">
-    <script>
+    <link rel="stylesheet" href="{% static 'css/movie.css' %}?{% load cache_bust %}" type="text/css">
+    <script src="{% static 'scripts/scroll.js' %}?{% load cache_bust %}">
+        <script>
 
-        function do_scroll() {
-            Math.Clamp = function (value, min, max) {
-                if (value < min) {
-                    return min;
-                } else if (value > max) {
-                    return max;
-                }
 
-                return value;
-            };
-
-            let lastMouseX;
-            let scrollDiv = document.getElementById("myscroll");
-            let marginLeft = scrollDiv.offsetLeft;
-            let cast = document.querySelector("#cast > ul");
-            let maxWidth = cast.getBoundingClientRect().width - scrollDiv.getBoundingClientRect().width;
-            console.log("max width", maxWidth);
-            let initialLeft;
-            let isDown = false;
-            scrollDiv.addEventListener('mousedown', function (e) {
-                isDown = true;
-                lastMouseX = e.clientX;
-                const rect = scrollDiv.getBoundingClientRect();
-                initialLeft = rect.x - marginLeft;
-                console.log("initial Left", initialLeft);
-            }, true);
-            document.addEventListener('mouseup', function () {
-                isDown = false;
-            }, true);
-
-            document.addEventListener('mousemove', function (e) {
-                event.preventDefault();
-                if (isDown) {
-                    let newLeftValue = (e.clientX - lastMouseX + initialLeft);
-                    newLeftValue = Math.Clamp(newLeftValue, 0, maxWidth);
-                    scrollDiv.style.left = newLeftValue + 'px';
-                }
-            }, true);
-
-        }
-
-        window.onload = function () {
-            console.log("on load called");
-            do_scroll();
-        }
     </script>
     <style>
         :root {
@@ -121,7 +76,6 @@
 
     <div class="empty_div"></div>
     <div class="horizontal_flex">
-
         <div id="movie_photo"></div>
 
         <div class="information">
@@ -157,16 +111,15 @@
 </div>
 
 <div class="left_align">
+
     <h1>Top Billed Cast</h1>
-    <div id="cast">
-        <ul>
+    <div class="horizontal_flex">
+        <ul id="cast">
             {% for person,character in movie.get_actors|slice:"8" %}
                 <li>
                     <div class="person">
                         <div class="person_image"
                              style="background-image: url('https://www.themoviedb.org/t/p/original/{{ person.image_path }}');">
-                            {#                            <img src="https://www.themoviedb.org/t/p/original/{{ person.image_path }}"#}
-                            {#                                 alt="Image"/>#}
                         </div>
                         <div class="name">{{ person.name }}</div>
                         <div class="character">{{ character }}</div>
@@ -174,8 +127,31 @@
                 </li>
             {% endfor %}
         </ul>
-        <div id="myscroll"></div>
+        <div class="grid">
+            <div class="grid-element">
+                <div id="">
+                    <h2>Duration</h2>
+                    <h2 class="value">1h 30min</h2>
+                </div>
+                <div id="votes">
+                    <h2>Votes</h2>
+                    <h2 class="value">360,000</h2>
+                </div>
+            </div>
+            <div class="grid-element">
+                <div id="day">
+                    <h2>Release day</h2>
+                    <h2 class="value">{{ movie.release_date }}</h2>
+                </div>
+                <div id="popularity">
+                    <h2>Popularity</h2>
+                    <h2 class="value">{{  movie.popularity }}</h2>
+                </div>
+            </div>
+        </div>
     </div>
+    <div id="myscroll"></div>
+</div>
 
 
 </div>
