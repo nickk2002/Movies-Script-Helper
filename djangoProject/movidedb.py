@@ -132,10 +132,11 @@ def remove_movie_duplicates():
 
 def run_movies():
     result_ids = get_movies_by_votes()
-    for movie_id in result_ids[:10]:
+    for movie_id in result_ids[11:20]:
         data = get_json(f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={api_key}")
-        movie = Movie.objects.get(moviedb_id=movie_id)
         push_to_db(data)
+        movie = Movie.objects.get(moviedb_id=movie_id)
+
         images = get_json(
             f"https://api.themoviedb.org/3/movie/{movie_id}/images?api_key={api_key}&include_image_language=en,null")
         posters = images['posters']
