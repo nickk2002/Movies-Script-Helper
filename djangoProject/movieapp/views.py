@@ -44,8 +44,10 @@ def search(request):
     genres_options = info.get('genres')
 
     movies = Movie.objects.filter(name__icontains=name, rating__range=(rating_low, rating_high))
-    movies = [movie for movie in movies if movie.has_actor(actor_query)]
-    movies = [movie for movie in movies if movie.has_director(director_query)]
+    if actor_query:
+        movies = [movie for movie in movies if movie.has_actor(actor_query)]
+    if director_query:
+        movies = [movie for movie in movies if movie.has_director(director_query)]
     print(genres_options)
     if genres_options:
         genres_options = genres_options.split(',')
