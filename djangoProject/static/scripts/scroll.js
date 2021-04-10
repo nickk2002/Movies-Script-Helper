@@ -12,6 +12,7 @@ function find_elements(){
 function calculate_cast_length(person_div,number_of_actors){
     let person_width = person_div.getBoundingClientRect().width;
     cast.style.width = person_width * number_of_actors + "px";
+    console.log("Person div has width", person_width);
     console.log("Cast has now a width of ",cast.style.width,"to handle",number_of_actors);
 }
 function calculate_scroll_length(){

@@ -6,9 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/movie.css' %}?{% load cache_bust %}" type="text/css">
     <script src="{% static 'scripts/scroll.js' %}?{% load cache_bust %}">
-        <script>
-
-
     </script>
     <style>
         :root {
@@ -74,7 +71,6 @@
 </div>
 <div class="frame">
 
-    <div class="empty_div"></div>
     <div class="horizontal_flex">
         <div id="movie_photo"></div>
 
@@ -103,21 +99,18 @@
             </ul>
 
         </div>
-
-
     </div>
-
-
 </div>
 
 <div class="left_align">
 
     <h1>Top Billed Cast</h1>
-    <div class="horizontal_flex">
+    <div id="cast-info">
         <ul id="cast">
             {% for person,character in movie.get_actors|slice:"8" %}
                 <li>
                     <div class="person">
+
                         <div class="person_image"
                              style="background-image: url('https://www.themoviedb.org/t/p/original/{{ person.image_path }}');">
                         </div>
@@ -145,7 +138,7 @@
                 </div>
                 <div id="popularity">
                     <h2>Popularity</h2>
-                    <h2 class="value">{{  movie.popularity }}</h2>
+                    <h2 class="value">{{ movie.popularity }}</h2>
                 </div>
             </div>
         </div>
@@ -153,7 +146,5 @@
     <div id="myscroll"></div>
 </div>
 
-
-</div>
 
 </body>

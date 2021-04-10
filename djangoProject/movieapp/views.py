@@ -15,3 +15,7 @@ def index(request):
 def movie(request, id):
     context = {"movie": get_object_or_404(Movie, id=id)}
     return render(request, "movie.html", context)
+
+
+def advanced_search(request):
+    return render(request, "advancedserach.html")
