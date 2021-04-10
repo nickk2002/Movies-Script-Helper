@@ -1,14 +1,15 @@
-.search-wrapper {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    height: 150px;
+.html .body {
+    height: 100%;
+    margin: 0;
 }
 
+
+/*margin: top right bottom left*/
 .horizontal_flex {
-    margin-top: 40px;
+    height: 500px;
+    align-self: center;
     display: flex;
-    height: auto;
+    padding-left: var(--padd-left);
 }
 
 .vertical_flex {
@@ -18,17 +19,18 @@
 
 
 .information {
-    padding-left: 100px;
+    color: white;
+    padding-left: 50px;
+    width: 70%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    align-content: space-between;
 }
 
 #name {
     color: white;
     font-weight: bold;
-    font: 60px Arial, sans-serif;
+    font: 40px Arial, sans-serif;
 }
 
 #year {
@@ -50,11 +52,9 @@ ul {
 #duration {
     color: #A0A0A0;
 }
-#genres ul {
-    margin-top: 0;
-    font-size: 20px;
-    font-weight: bold;
-    border: 1px solid red;
+
+#genres li {
+    font-size: 17px;
 }
 
 .information ul li {
@@ -62,7 +62,6 @@ ul {
     color: white;
     padding-right: 20px;
 }
-
 
 .info {
     position: relative;
@@ -72,113 +71,120 @@ ul {
 
 
 #plot {
-    margin-top: 90px;
+    margin-top: 100px;
     font-weight: bold;
-    font: 40px Arial, sans-serif;
+    font: 30px Arial, sans-serif;
     color: white;
-    border: 1px solid #350f0f;
 }
 
 #plot_text {
-    width: 1000px;
-    font: 20px Arial, sans-serif;
-}
-
-.directors{
-    display: flex;
-    margin-top: 100px;
-    width: 80%;
-    flex-wrap: wrap;
-    /*justify-content: space-around;*/
-}
-
-.directors > li{
-    /*border: 1px solid green;*/
-    margin-right: 200px;
-    margin-bottom: 50px;
-}
-.director{
-    font: 30px Arial, sans-serif;
-}
-.director_name{
     margin-top: 10px;
     font: 20px Arial, sans-serif;
 }
-.left_align{
-    padding-left: var(--padd-left);
-    height: 100%;
-    background:#201F1F;
+
+.directors {
+    margin-top: auto;
+    width: 100%;
+    display: flex;
 }
-.left_align h1{
-    color:white;
-    padding-top: 30px ;
+
+.directors > li {
+    margin-right: 200px;
+}
+
+.director {
+    font: 30px Arial, sans-serif;
+}
+
+.director_name {
+    margin-top: 10px;
+    font: 20px Arial, sans-serif;
+}
+
+.left_align {
+    padding-left: var(--padd-left);
+    height: 2000px;
+    background: #201F1F;
+}
+
+.left_align h1 {
+    color: white;
+    padding-top: 30px;
     padding-bottom: 30px;
     margin: 0;
 
 }
-#cast-info{
+
+#cast-info {
     padding: 0;
     margin: 0;
     display: flex;
-    height: 200px;
 }
-#cast{
+
+#cast {
     margin: 0;
     padding: 0;
     position: relative;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    height: auto;
-    overflow: hidden;
+    overflow-y: hidden;
 }
-.something{
-    height: 200px;
-    width: 200px;
-    border: 1px solid red;
+
+#cast::-webkit-scrollbar {
+    display: none;
+    z-index: 1;
 }
-#myscroll{
+
+#cast {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+#myscroll {
     position: relative;
-    margin-top: 20px;
+    margin-top: 50px;
     width: 40%;
     height: 10px;
     background: white;
 }
 
+
 .person{
     position: relative;
     padding-right: 80px;
-    /*border: 1px solid red;*/
-    color:white;
-    left: 0;
 }
-.person_image{
+
+.person_image {
     height: 150px;
     width: 150px;
     border-radius: 50%;
     background-position: top 25% right 50%;
     background-size: cover;
 }
-.person .name{
-    margin-top: 0;
-    font-size: 20px;
+
+.person .name {
+    color:white;
+    font-size: 18px;
     text-align: center;
     font-weight: bold;
 }
-.person .character{
+
+.character {
     font-size: 15px;
-    color:#C9C9C9;
+    color: #C9C9C9;
     opacity: 75%;
-    bottom:0;
     text-align: center;
+    padding: 0;
+    margin: 0;
 }
+
 .grid {
     margin-left: 50px;
     font-family: Arial, serif;
     flex-grow: 1;
     grid-template-columns: auto auto auto;
     display: grid;
-    grid-column-gap: 10px;
 }
 
 .grid-element {
@@ -186,17 +192,25 @@ ul {
     color: white;
     display: grid;
 }
-
+#votes{
+    display: flex;
+    flex-direction: column-reverse;
+}
+#popularity{
+    display: flex;
+    flex-direction: column-reverse;
+}
 .grid-element h2 {
+    margin: 0;
     position: relative;
     font-weight: bold;
     left: 0;
-    margin: 0;
     padding: 0;
 }
 
 .grid-element .value {
+    margin: 0;
+    padding: 0;
     color: #C9C9C9;
-    top: 10px;
     font-weight: normal;
 }

@@ -1,5 +1,5 @@
 {% include 'Reusable/navigation.html' %}
-
+<html>
 {% load static %}
 {% load cache_bust %}
 
@@ -12,8 +12,9 @@
         #movie_photo {
             flex-direction: row;
             margin-top: 0;
-            width: 400px;
-            height: 600px;
+            margin-bottom: 10%;
+            width: 300px;
+            height: 500px;
             background-image: url("https://www.themoviedb.org/t/p/original/{{ movie.poster_path }}");
             background-size: cover;
             background-position: center;
@@ -25,26 +26,18 @@
             filter: blur(5px);
         }
 
-        .frame {
-            background-position: center;
-            height: 90%;
-            padding-left: var(--padd-left);
-            display: flex;
-            flex-direction: column;
-            font: var(--arial);
-            color: white;
-        }
 
         #bg_image {
-            position: absolute;
-            height: 100%;
-            width: 100%;
             z-index: -1;
+            width: 100%;
+            height: 91%;
+            display: flex;
             background: linear-gradient(to right, rgba(12.16%, 14.12%, 24.31%, 1.00) 150px, rgba(12.16%, 14.12%, 24.31%, 0.84) 100%),
             url("https://www.themoviedb.org/t/p/original/{{ movie.background_path }}");
             background-size: cover;
             background-position: center;
         }
+
 
     </style>
 </head>
@@ -52,12 +45,8 @@
 
 <body>
 <div id="bg_image">
-</div>
-<div class="frame">
-
     <div class="horizontal_flex">
         <div id="movie_photo"></div>
-
         <div class="information">
             <div id="name">
                 {{ movie.name }}
@@ -67,11 +56,11 @@
                 {% for genre in movie.get_genres_parsed %}
                     <li>{{ genre }}</li>
                 {% endfor %}
-                <li id="duration">1h 30 min</li>
+                <li id="duration">{{ movie.get_duration_text }}</li>
             </ul>
 
             <div id="plot">Plot</div>
-            <div id="plot_text">{{ movie.description }}</div>
+            <p id="plot_text">{{ movie.description }}</p>
             <ul class="directors">
                 {% for director in movie.get_directors %}
                     <li>
@@ -85,23 +74,18 @@
         </div>
     </div>
 </div>
-
 <div class="left_align">
 
     <h1>Top Billed Cast</h1>
     <div id="cast-info">
         <ul id="cast">
-{#            TODO: The text overflows sometimes#}
             {% for person,character in movie.get_actors|slice:"8" %}
-                <li>
-                    <div class="person">
-
-                        <div class="person_image"
-                             style="background-image: url('https://www.themoviedb.org/t/p/original/{{ person.image_path }}');">
-                        </div>
-                        <div class="name">{{ person.name }}</div>
-                        <div class="character">{{ character }}</div>
+                <li class="person">
+                    <div class="person_image"
+                         style="background-image: url('https://www.themoviedb.org/t/p/original/{{ person.image_path }}');">
                     </div>
+                    <div class="name">{{ person.name }}</div>
+                    <div class="character">{{ character }}</div>
                 </li>
             {% endfor %}
         </ul>
@@ -109,11 +93,13 @@
             <div class="grid-element">
                 <div id="">
                     <h2>Duration</h2>
-                    <h2 class="value">1h 30min</h2>
+                    <h2 class="value">{{ movie.get_duration_text }}</h2>
                 </div>
                 <div id="votes">
-                    <h2>Votes</h2>
-                    <h2 class="value">360,000</h2>
+                    <div>
+                        <h2>Votes</h2>
+                        <h2 class="value">{{ movie.get_votes }}</h2>
+                    </div>
                 </div>
             </div>
             <div class="grid-element">
@@ -122,8 +108,10 @@
                     <h2 class="value">{{ movie.release_date }}</h2>
                 </div>
                 <div id="popularity">
-                    <h2>Popularity</h2>
-                    <h2 class="value">{{ movie.popularity }}</h2>
+                    <div>
+                        <h2>Popularity</h2>
+                        <h2 class="value">{{ movie.popularity }}</h2>
+                    </div>
                 </div>
             </div>
         </div>
@@ -133,3 +121,4 @@
 
 
 </body>
+</html>
