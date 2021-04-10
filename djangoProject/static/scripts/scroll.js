@@ -16,7 +16,7 @@ function calculate_cast_length(person_div,number_of_actors){
     console.log("Cast has now a width of ",cast.style.width,"to handle",number_of_actors);
 }
 function calculate_scroll_length(){
-    scrollDiv.style.width = 0.2 * cast.getBoundingClientRect().width + "px";
+    scrollDiv.style.width = peopleArray[0].getBoundingClientRect().width * 2 + "px";
 }
 Math.Clamp = function (value, min, max) {
     if (value < min) {
