@@ -107,6 +107,7 @@
     <h1>Top Billed Cast</h1>
     <div id="cast-info">
         <ul id="cast">
+{#            TODO: The text overflows sometimes#}
             {% for person,character in movie.get_actors|slice:"8" %}
                 <li>
                     <div class="person">

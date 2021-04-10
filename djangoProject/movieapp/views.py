@@ -18,4 +18,13 @@ def movie(request, id):
 
 
 def advanced_search(request):
-    return render(request, "advancedserach.html")
+    genre_list = []
+    for genre in Genre.objects.all():
+        genre_name = genre.name
+        if genre_name == "Science Fiction":
+            genre_name = "Fiction"
+        genre_list.append(genre_name)
+    context = {
+        "genres": genre_list
+    }
+    return render(request, "advancedserach.html", context)

@@ -25,7 +25,6 @@ body {
     align-items: center;
     padding-right: 30px;
     padding-left: 30px;
-    /*            border: 1px solid white;*/
     color: white;
     font: 16px Arial, sans-serif;
 }
@@ -50,7 +49,7 @@ body {
     border: 1px solid red;
     width: 60%;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 150px 1fr;
+    grid-template-rows: 150px 150px;
 }
 
 
@@ -60,24 +59,57 @@ body {
     font-family: Microsoft SansSerif, serif;
 }
 
-.grid-element input {
+input {
     margin-top: 10px;
     height: 35px;
-    width: 240px;
+    width: 267px;
+    border-radius: 5px 5px 5px 5px;
+    border: none;
+}
+.rating{
+    width: 100px;
+}
+.grid_element > span{
+    height: 100%;
+}
+.grid_element > span > span{
+    color: var(--light-blue);
+    font-size: 30px;
+    margin-left: 17px;
+    margin-right: 17px;
 }
 
-.grid-element span span {
+#genre_list{
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+.genre_wrapper{
+    width: 150px;
+    display: flex;
+    flex-wrap: nowrap;
+    margin-right: 30px;
+    margin-bottom: 30px;
+}
+.genre_wrapper .genre_name{
+    font-family: Microsoft SansSerif, serif;
     font-size: 25px;
-    font-weight: bold;
+    color: white;
+    align-self: center;
+    padding-left: 10px;
+    text-wrap: none;
 }
-
-h1 {
-    padding: 0;
-    margin: 0;
-    color: var(--light-blue);
+.genre_wrapper .rectangle{
+    position: relative;
+    width: 35px;
+    height: 35px;
+    border: 1px solid #707070;
+    background-color: white;
+    border-radius: 5px 5px 5px 5px;
 }
-
-
-span {
-    color: var(--light-blue);
+.genre-grid{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-top: 10px;
+    border: 1px solid red;
 }

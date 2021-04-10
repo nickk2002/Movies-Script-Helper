@@ -23,7 +23,7 @@
             position: absolute;
             height: 100%;
             width: 100%;
-            z-index: -1;
+            z-index: -10;
             background-size: cover;
             background: linear-gradient(to right, rgba(12.16%, 14.12%, 24.31%, 1.00) 150px, rgba(12.16%, 14.12%, 24.31%, 0.84) 100%) center;
         }
@@ -54,9 +54,9 @@
     <div class="grid_element">
         <div class="input_name">Rating</div>
         <span>
-            <input type="text">
+            <input class="rating">
             <span>to</span>
-            <input>
+            <input class="rating">
         </span>
     </div>
     <div class="grid_element">
@@ -71,6 +71,18 @@
             Director Name
         </div>
         <input type="text">
+    </div>
+    <div class="grid-element" id="genre_list">
+        <div class="input_name">Genres</div>
+        <div class="genre-grid">
+            {% for genre in genres %}
+                <div class="genre_wrapper">
+                    <span class="rectangle"></span>
+                    <span class="genre_name">{{ genre }}</span>
+                </div>
+            {% endfor %}
+        </div>
+
     </div>
 
 </div>
