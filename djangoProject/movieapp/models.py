@@ -85,6 +85,19 @@ class Movie(models.Model):
                 return True
         return False
 
+    def get_votes(self):
+        return format(self.votes,",")
+    def get_duration_text(self):
+        duration = int(self.duration)
+        minutes = duration % 60
+        hours = duration // 60
+        parsed = str()
+        if hours:
+            parsed = str(hours) + 'h '
+        if minutes:
+            parsed += str(minutes) + "min"
+        return parsed
+
     def has_genre(self, genre_list: list):
 
         movie_genres = self.get_genres()
