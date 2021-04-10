@@ -1,3 +1,4 @@
+{% include 'Reusable/navigation.html' %}
 {% load cache_bust %}
 {% load static %}
 
@@ -6,48 +7,11 @@
     <link rel="stylesheet" href='{% static 'css/results.css' %}?{% cache_bust %}'>
 </head>
 <body>
-<div class="navigation">
-    <ul>
-        <li>Home</li>
-        <li>Advanced Search</li>
-        <li>Login</li>
-        <li>Register</li>
-    </ul>
-</div>
 
 <div class="frame">
     <h1>Results for your search</h1>
     <div class="left-align">
-        <ul id="movie-list">
-            {% for movie in movies %}
-                <li>
-                    <div class="movie">
-                        <a href="/movie/{{ movie.id }}">
-                            <div class="movie-image">
-
-                                <img src="https://image.tmdb.org/t/p/w185/{{ movie.poster_path }}" alt="Thor image"
-                                     width="270" height="380">
-                                <div class="rectangle">
-                                    <div class="number">{{ movie.rating }}</div>
-                                </div>
-                            </div>
-                        </a>
-
-                        <div class="info">
-                            <div class="name"> {{ movie.name }}</div>
-                            <div class="year"> {{ movie.get_year }}</div>
-                            <div class="genres">
-                                {% for genre in movie.get_genres_parsed %}
-                                    <div class="genre">{{ genre }}</div>
-                                {% endfor %}
-
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            {% endfor %}
-        </ul>
-
+        {% include 'Reusable/movie_list.html' %}
     </div>
 
 </div>

@@ -6,60 +6,17 @@
     <link rel="stylesheet" href='{% static 'css/homepage.css' %}?{% cache_bust %}'>
 </head>
 
-
-
 <body>
-
-
-<div class="navigation">
-    <ul>
-        <li>Home</li>
-        <li>Advanced Search</li>
-        <li>Login</li>
-        <li>Register</li>
-    </ul>
-</div>
+{% include 'Reusable/navigation.html' %}
 
 <div class="frame">
     <div class="search">Search and Preview Movies</div>
     <h1 class="welcome">Welcome to my website</h1>
-
-
     <div class="left-align">
         <p class="popular">Popular</p>
-        <ul id="movie-list">
-            {% for movie in movies|slice:"0:9" %}
-                <li>
-                    <div class="movie">
-                        <a href="/movie/{{ movie.id }}">
-                            <div class="movie-image">
-
-                                <img src="https://image.tmdb.org/t/p/w185/{{ movie.poster_path }}" alt="Thor image"
-                                     width="270" height="380">
-                                <div class="rectangle">
-                                    <div class="number">{{ movie.rating }}</div>
-                                </div>
-                            </div>
-                        </a>
-
-                        <div class="info">
-                            <div class="name"> {{ movie.name }}</div>
-                            <div class="year"> {{ movie.get_year }}</div>
-                            <div class="genres">
-                                {% for genre in movie.get_genres_parsed %}
-
-                                    <div class="genre">{{ genre }}</div>
-                                {% endfor %}
-
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            {% endfor %}
-        </ul>
+        {% include 'Reusable/movie_list.html' %}
 
     </div>
-
 </div>
 
 

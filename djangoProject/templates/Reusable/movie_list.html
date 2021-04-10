@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #movie-list {
+            padding: 0;
+            list-style-type: none;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        #movie-list li {
+            padding-right: 100px;
+            padding-bottom: 100px;
+        }
+
+
+
+        .movie {
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            border: 1px solid red;
+        }
+
+        img{
+            border-width: 0.25px;
+            border-style: solid;
+            border-color: white;
+            border-radius: 2px;
+        }
+
+        .movie-image{
+            position: relative;
+        }
+        .rectangle > .number {
+            color: white;
+            font-size: 20px;
+        }
+
+        .rectangle {
+            position: absolute;
+            text-align: center;
+            height: 25px;
+            top: -2.5%;
+            left: 35%;
+            border-radius: 30px;
+            width: 30%;
+            background-color: var(--my-yellow);
+        }
+
+        .movie .info {
+            margin:0;
+            padding:0;
+            position: relative;
+            width: 270px;
+            /*border: 1px solid red;*/
+        }
+
+        .movie .name {
+            position: relative;
+            top: 5px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            width: 80%;
+            font: 25px Arial, sans-serif;
+            font-weight: bold;
+            color: white;
+
+        }
+
+        .movie .year {
+            position: absolute;
+            top: 5px;
+            right: 0;
+            font: 25px Arial, sans-serif;
+            font-weight: bold;
+            color: white;
+        }
+
+        .info .genres {
+            position: relative;
+            margin: 10px 0 0 0;
+            color: #7F9FB5;
+            font: 20px Arial, sans-serif;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            overflow: hidden;
+            text-align: left;
+            justify-content: space-between;
+        }
+
+    </style>
+</head>
+<body>
+<ul id="movie-list">
+    {% for movie in movies %}
+        <li>
+            <div class="movie">
+                <a href="/movie/{{ movie.id }}">
+                    <div class="movie-image">
+
+                        <img src="https://image.tmdb.org/t/p/w185/{{ movie.poster_path }}" alt="Thor image"
+                             width="270" height="380">
+                        <div class="rectangle">
+                            <div class="number">{{ movie.rating }}</div>
+                        </div>
+                    </div>
+                </a>
+
+                <div class="info">
+                    <div class="name"> {{ movie.name }}</div>
+                    <div class="year"> {{ movie.get_year }}</div>
+                    <div class="genres">
+                        {% for genre in movie.get_genres_parsed %}
+                            <div class="genre">{{ genre }}</div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </li>
+    {% endfor %}
+</ul>
+
+</body>
+</html>

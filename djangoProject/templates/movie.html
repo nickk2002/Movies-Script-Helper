@@ -1,22 +1,14 @@
+{% include 'Reusable/navigation.html' %}
+
 {% load static %}
 {% load cache_bust %}
 
 <head>
     <title>Movie</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/movie.css' %}?{% load cache_bust %}" type="text/css">
     <script src="{% static 'scripts/scroll.js' %}?{% load cache_bust %}">
     </script>
     <style>
-        :root {
-            --my-red: #F83745;
-            --my-blue: #02485E;
-            --my-yellow: #FFB10A;
-            --my-green: #00FF3C;
-            --arial: 20px Arial, sans-serif;
-            --padd-left: 100px;
-        }
-
         #movie_photo {
             flex-direction: row;
             margin-top: 0;
@@ -30,7 +22,7 @@
         }
 
         #movie_photo:hover {
-            filter: blur(13px);
+            filter: blur(5px);
         }
 
         .frame {
@@ -59,14 +51,6 @@
 
 
 <body>
-<div class="navigation">
-    <ul>
-        <li>Home</li>
-        <li>Advanced Search</li>
-        <li>Login</li>
-        <li>Register</li>
-    </ul>
-</div>
 <div id="bg_image">
 </div>
 <div class="frame">
