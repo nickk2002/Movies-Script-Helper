@@ -31,7 +31,6 @@
     </style>
 </head>
 
-
 <body>
 <div class="navigation">
     <ul>
@@ -44,56 +43,60 @@
 <div id="bg_image">
 </div>
 
-<div class="grid">
-    <div class="grid_element">
-        <div class="input_name">
-            Movie Name
+<form name="search_movies" method="GET" action= {% url 'search' %}>
+    <div class="grid">
+        <div class="grid_element">
+            <div class="input_name">
+                Movie Name
+            </div>
+            <input type="text" name="movie name">
         </div>
-        <input type="text">
-    </div>
-    <div class="grid_element">
-        <div class="input_name">Rating</div>
-        <span>
-            <input class="rating">
+        <div class="grid_element">
+            <div class="input_name">Rating</div>
+            <span>
+            <input class="rating" name="rating small">
             <span>to</span>
-            <input class="rating">
+            <input class="rating" name="rating big">
         </span>
-    </div>
-    <div class="grid_element">
-        <div class="input_name">
-            Actor Name
         </div>
-        <input type="text">
-    </div>
-
-    <div class="grid_element">
-        <div class="input_name">
-            Director Name
-        </div>
-        <input type="text">
-    </div>
-    <div class="grid-element" id="genre_list">
-        <div class="input_name">Genres</div>
-        <div class="genre-grid">
-            {% for genre in genres %}
-                <div class="genre_wrapper">
-                    <span class="rectangle" >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22.323" height="18.277"
-                                                 viewBox="0 0 22.323 18.277">
-                            <path id="Icon_awesome-check" data-name="Icon awesome-check"
-                                d="M7.582,22.5.327,14.53a1.312,1.312,0,0,1,0-1.733l1.578-1.733a1.047,1.047,0,0,1,1.578,0l4.887,5.366L18.839,4.936a1.047,1.047,0,0,1,1.578,0L22,6.669A1.312,1.312,0,0,1,22,8.4L9.16,22.5A1.047,1.047,0,0,1,7.582,22.5Z"
-                                transform="translate(0 -4.577)" fill="#f83745">
-                            </path>
-                        </svg>
-                    </span>
-                    <span class="genre_name">{{ genre }}</span>
-                </div>
-            {% endfor %}
+        <div class="grid_element">
+            <div class="input_name">
+                Actor Name
+            </div>
+            <input type="text" name="actor">
         </div>
 
+        <div class="grid_element">
+            <div class="input_name">
+                Director Name
+            </div>
+            <input name="director" type="text">
+        </div>
+        <div class="grid-element" id="genre_list">
+            <div class="input_name">Genres</div>
+            <div class="genre-grid">
+                {% for genre in genres %}
+                    <div class="genre_wrapper">
+                        <span class="rectangle">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22.323" height="18.277"
+                                 viewBox="0 0 22.323 18.277">
+                                <path id="Icon_awesome-check" data-name="Icon awesome-check"
+                                      d="M7.582,22.5.327,14.53a1.312,1.312,0,0,1,0-1.733l1.578-1.733a1.047,1.047,0,0,1,1.578,0l4.887,5.366L18.839,4.936a1.047,1.047,0,0,1,1.578,0L22,6.669A1.312,1.312,0,0,1,22,8.4L9.16,22.5A1.047,1.047,0,0,1,7.582,22.5Z"
+                                      transform="translate(0 -4.577)" fill="#f83745">
+                                </path>
+                            </svg>
+                        </span>
+                        <span class="genre_name">{{ genre }}</span>
+                    </div>
+                {% endfor %}
+
+            </div>
+
+        </div>
+        <input id="hidden genres" name="genres">
+        <input type="submit" value="Run Search">
+
     </div>
 
-</div>
-
-
+</form>
 </body>

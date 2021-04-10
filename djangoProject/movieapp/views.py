@@ -28,3 +28,29 @@ def advanced_search(request):
         "genres": genre_list
     }
     return render(request, "advancedserach.html", context)
+
+
+def search(request):
+    info = request.GET.dict()
+    name = info.get("movie name")
+    rating_low = info.get("rating small")
+    rating_high = info.get("rating big")
+    actor_query = info.get("actor")
+    movies = Movie.objects.filter(name__icontains=name, rating__range=(rating_low, rating_high))
+    print(movies)
+    new_movies = []
+    for movie in movies:
+        for actor_name in movie.get_actor_names():
+            if actor_query in actor_name:
+                new_movies.append(movie)
+                print(actor_name)
+                break
+    movies = new_movies
+    if movies:
+        context = {
+            "movies": movies,
+        }
+    else:
+        return render(request, "404.html")
+    print("Search request", info)
+    return render(request, "searchresults.html", context)

@@ -5,12 +5,7 @@
     <title>Title of the document</title>
     <link rel="stylesheet" href='{% static 'css/homepage.css' %}?{% cache_bust %}'>
 </head>
-
-
-
 <body>
-
-
 <div class="navigation">
     <ul>
         <li>Home</li>
@@ -21,16 +16,9 @@
 </div>
 
 <div class="frame">
-    <div class="search-wrapper">
-        <div class="search">Search and Preview Movies</div>
-        <div class="welcome">Welcome to my website</div>
-
-    </div>
-
     <div class="left-align">
-        <p class="popular">Popular</p>
         <ul id="movie list">
-            {% for movie in movies|slice:"5:9" %}
+            {% for movie in movies %}
                 <li>
                     <div class="movie">
                         <a href="/movie/{{ movie.id }}">
@@ -49,7 +37,6 @@
                             <div class="year"> {{ movie.get_year }}</div>
                             <div class="genres">
                                 {% for genre in movie.get_genres %}
-
                                     <div class="genre">{{ genre }}</div>
                                 {% endfor %}
 

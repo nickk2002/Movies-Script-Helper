@@ -30,7 +30,6 @@ class Movie(models.Model):
     poster_path = models.CharField(null=True, max_length=100)
     background_path = models.CharField(null=True, max_length=100)
 
-
     def get_year(self):
         return self.release_date.year
 
@@ -44,7 +43,7 @@ class Movie(models.Model):
         return genre_list
 
     def get_directors(self):
-        director_contracts = Contract.objects.filter(movie_id=self.id,job="Director")
+        director_contracts = Contract.objects.filter(movie_id=self.id, job="Director")
         directors = []
         for contract in director_contracts:
             director = Person.objects.get(id=contract.person_id)
@@ -55,7 +54,13 @@ class Movie(models.Model):
         actor_list = []
         for contract in Contract.objects.filter(movie_id=self.id):
             person = Person.objects.get(id=contract.person_id)
-            actor_list.append((person,contract.character))
+            actor_list.append((person, contract.character))
+        return actor_list
+    def get_actor_names(self):
+        actor_list = []
+        for contract in Contract.objects.filter(movie_id=self.id):
+            person = Person.objects.get(id=contract.person_id)
+            actor_list.append(person.name)
         return actor_list
 
 class ContractType(Enum):

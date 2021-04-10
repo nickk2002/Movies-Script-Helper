@@ -43,7 +43,13 @@ body {
     height: 150px;
 }
 
+body {
+    margin: 0;
+    padding: 0;
+}
+
 .grid {
+    margin-top: 20px;
     margin-left: 100px;
     display: inline-grid;
     border: 1px solid red;
@@ -66,31 +72,36 @@ input {
     border-radius: 5px 5px 5px 5px;
     border: none;
 }
-.rating{
+
+.rating {
     width: 100px;
 }
-.grid_element > span{
+
+.grid_element > span {
     height: 100%;
 }
-.grid_element > span > span{
+
+.grid_element > span > span {
     color: var(--light-blue);
     font-size: 30px;
     margin-left: 17px;
     margin-right: 17px;
 }
 
-#genre_list{
+#genre_list {
     grid-column-start: 1;
     grid-column-end: 3;
 }
-.genre_wrapper{
+
+.genre_wrapper {
     width: 150px;
     display: flex;
     flex-wrap: nowrap;
     margin-right: 30px;
     margin-bottom: 30px;
 }
-.genre_wrapper .genre_name{
+
+.genre_wrapper .genre_name {
     font-family: Microsoft SansSerif, serif;
     font-size: 25px;
     color: white;
@@ -98,7 +109,8 @@ input {
     padding-left: 10px;
     text-wrap: none;
 }
-.genre_wrapper .rectangle{
+
+.genre_wrapper .rectangle {
     position: relative;
     display: flex;
     justify-content: center;
@@ -108,12 +120,14 @@ input {
     background-color: white;
     border-radius: 5px 5px 5px 5px;
 }
-.rectangle svg{
+
+.rectangle svg {
     display: none;
     align-self: center;
     position: relative;
 }
-.genre-grid{
+
+.genre-grid {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
