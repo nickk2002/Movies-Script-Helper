@@ -35,17 +35,22 @@ def search(request):
     name = info.get("movie name")
     rating_low = info.get("rating small")
     rating_high = info.get("rating big")
+    if not rating_low:
+        rating_low = 0
+    if not rating_high:
+        rating_high = 10
     actor_query = info.get("actor")
+    director_query = info.get("director")
+    genres_options = info.get('genres')
+
     movies = Movie.objects.filter(name__icontains=name, rating__range=(rating_low, rating_high))
-    print(movies)
-    new_movies = []
-    for movie in movies:
-        for actor_name in movie.get_actor_names():
-            if actor_query in actor_name:
-                new_movies.append(movie)
-                print(actor_name)
-                break
-    movies = new_movies
+    movies = [movie for movie in movies if movie.has_actor(actor_query)]
+    movies = [movie for movie in movies if movie.has_director(director_query)]
+    print(genres_options)
+    if genres_options:
+        genres_options = genres_options.split(',')
+        movies = [movie for movie in movies if movie.has_genre(genre_list=genres_options)]
+
     if movies:
         context = {
             "movies": movies,

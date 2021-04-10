@@ -33,12 +33,19 @@ class Movie(models.Model):
     def get_year(self):
         return self.release_date.year
 
-    def get_genres(self):
+    def get_genres_parsed(self):
         genre_list = []
         for category in Category.objects.filter(movie_id=self.id):
             genre_name = Genre.objects.get(id=category.genre_id).name
             if genre_name == "Science Fiction":
                 genre_name = "SF"
+            genre_list.append(genre_name)
+        return genre_list
+
+    def get_genres(self):
+        genre_list = []
+        for category in Category.objects.filter(movie_id=self.id):
+            genre_name = Genre.objects.get(id=category.genre_id).name
             genre_list.append(genre_name)
         return genre_list
 
@@ -56,12 +63,37 @@ class Movie(models.Model):
             person = Person.objects.get(id=contract.person_id)
             actor_list.append((person, contract.character))
         return actor_list
+
     def get_actor_names(self):
         actor_list = []
         for contract in Contract.objects.filter(movie_id=self.id):
             person = Person.objects.get(id=contract.person_id)
             actor_list.append(person.name)
         return actor_list
+
+    def has_actor(self, actor_query):
+        for actor_name in self.get_actor_names():
+            if actor_query in actor_name:
+                print("Matched actor", actor_name)
+                return True
+        return False
+
+    def has_director(self, director_query):
+        for director_name in self.get_directors():
+            if director_query in director_name:
+                print("Matched Direcor", director_name)
+                return True
+        return False
+
+    def has_genre(self, genre_list: list):
+
+        movie_genres = self.get_genres()
+        for genre_name in genre_list:
+            if genre_name in movie_genres:
+                print("all genres:", movie_genres)
+                return True
+        return False
+
 
 class ContractType(Enum):
     DIRECTOR = "DIRECTOR"

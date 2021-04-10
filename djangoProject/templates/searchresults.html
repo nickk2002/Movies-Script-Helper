@@ -36,7 +36,7 @@
                             <div class="name"> {{ movie.name }}</div>
                             <div class="year"> {{ movie.get_year }}</div>
                             <div class="genres">
-                                {% for genre in movie.get_genres %}
+                                {% for genre in movie.get_genres_parsed %}
                                     <div class="genre">{{ genre }}</div>
                                 {% endfor %}
 

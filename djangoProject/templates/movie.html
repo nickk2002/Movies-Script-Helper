@@ -80,7 +80,7 @@
                 <div id="year"> ({{ movie.get_year }})</div>
             </div>
             <ul id="genres">
-                {% for genre in movie.get_genres %}
+                {% for genre in movie.get_genres_parsed %}
                     <li>{{ genre }}</li>
                 {% endfor %}
                 <li id="duration">1h 30 min</li>
