@@ -3,7 +3,7 @@
 
 <head>
     <title>Title of the document</title>
-    <link rel="stylesheet" href='{% static 'css/homepage.css' %}?{% cache_bust %}'>
+    <link rel="stylesheet" href='{% static 'css/results.css' %}?{% cache_bust %}'>
 </head>
 <body>
 <div class="navigation">
@@ -16,8 +16,9 @@
 </div>
 
 <div class="frame">
+    <h1>Results for your search</h1>
     <div class="left-align">
-        <ul id="movie list">
+        <ul id="movie-list">
             {% for movie in movies %}
                 <li>
                     <div class="movie">
@@ -25,7 +26,7 @@
                             <div class="movie-image">
 
                                 <img src="https://image.tmdb.org/t/p/w185/{{ movie.poster_path }}" alt="Thor image"
-                                     width="270" height="400">
+                                     width="270" height="380">
                                 <div class="rectangle">
                                     <div class="number">{{ movie.rating }}</div>
                                 </div>

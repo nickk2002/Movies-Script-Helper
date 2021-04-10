@@ -1,0 +1,161 @@
+body {
+    background-color: white;
+    margin: 0;
+    padding: 0;
+}
+
+.navigation {
+    background-color: var(--my-red);
+    width: 100%;
+    height: 60px;
+}
+
+.navigation ul {
+    margin: 0;
+    padding-left: 50%;
+    height: 100%;
+    border: 1px solid blue;
+    list-style-type: none;
+    display: flex;
+}
+
+.navigation li {
+    padding-left: 80px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    color: white;
+    font: 16px Arial, sans-serif;
+}
+
+.frame {
+    background: rgba(12.16%, 14.12%, 24.31%,1);
+    scroll-behavior: auto;
+    border-top: 2px solid black;
+}
+
+.search {
+    position: absolute;
+    top: 20px;
+    font: 60px Arial, sans-serif;
+    color: var(--my-red);
+}
+.welcome {
+    position: absolute;
+    top: 150px;
+    font: 40px Arial, sans-serif;
+    color: white;
+}
+
+
+h1{
+    margin: 0;
+    padding: 2% 0 3% 10%;
+    color: white;
+    font-family: Microsoft SansSerif, serif;
+
+}
+.left-align {
+    padding-left: 10%;
+}
+
+#movie-list {
+    padding: 0;
+    list-style-type: none;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+#movie-list li {
+    padding-right: 100px;
+    padding-bottom: 100px;
+}
+
+
+
+.movie {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    border: 1px solid red;
+}
+
+img{
+    border-width: 0.25px;
+    border-style: solid;
+    border-color: white;
+    border-radius: 2px;
+}
+
+.movie-image{
+    position: relative;
+}
+.rectangle > .number {
+    color: white;
+    font-size: 20px;
+}
+
+.rectangle {
+    position: absolute;
+    text-align: center;
+    height: 25px;
+    top: -2.5%;
+    left: 35%;
+    border-radius: 30px;
+    width: 30%;
+    background-color: var(--my-yellow);
+}
+
+.movie .info {
+    margin:0;
+    padding:0;
+    position: relative;
+    width: 270px;
+    /*border: 1px solid red;*/
+}
+
+.movie .name {
+    position: relative;
+    top: 5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 80%;
+    font: 25px Arial, sans-serif;
+    font-weight: bold;
+    color: white;
+
+}
+
+.movie .year {
+    position: absolute;
+    top: 5px;
+    right: 0;
+    font: 25px Arial, sans-serif;
+    font-weight: bold;
+    color: white;
+}
+
+.info .genres {
+    position: relative;
+    margin: 10px 0 0 0;
+    color: #7F9FB5;
+    font: 20px Arial, sans-serif;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    text-align: left;
+    justify-content: space-between;
+}
+
+
+
+:root {
+    --my-red: #F83745;
+    --my-blue: #02485E;
+    --my-yellow: #FFB10A;
+}
