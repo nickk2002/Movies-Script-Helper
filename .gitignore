@@ -2,6 +2,9 @@ idea/
 venv/
 .idea/
 __pycache__/
- idea/
+idea/
 app/Screapers/settings.py
 Folder Test/
+/djangoProject/admin/
+/djangoProject/images/
+/djangoProject/sampledata/
