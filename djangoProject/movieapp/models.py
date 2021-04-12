@@ -3,18 +3,10 @@ from enum import Enum
 from django.db import models
 
 
-class Titles(models.Model):
-    movie_id = models.PositiveIntegerField()
-    title = models.CharField(max_length=50)
-    language = models.CharField(max_length=50, null=True)
-    region = models.CharField(max_length=5, null=True)
-    is_original = models.BooleanField()
-
-
 class Movie(models.Model):
     imdb_id = models.CharField(max_length=50)
     name = models.CharField(max_length=50)
-    moviedb_id = models.IntegerField(null=True, blank=True)
+    moviedb_id = models.IntegerField()
     description = models.CharField(max_length=250, null=True)
     tagline = models.CharField(max_length=50)
     rating = models.FloatField(null=True)
@@ -22,7 +14,6 @@ class Movie(models.Model):
     popularity = models.FloatField(null=True)
 
     release_date = models.DateField(null=True)
-    # country = models.CharField(max_length=50, null=True)
     budget = models.PositiveIntegerField(null=True)
     profit = models.PositiveIntegerField(null=True)
     duration = models.PositiveIntegerField(null=True)
@@ -86,7 +77,8 @@ class Movie(models.Model):
         return False
 
     def get_votes(self):
-        return format(self.votes,",")
+        return format(self.votes, ",")
+
     def get_duration_text(self):
         duration = int(self.duration)
         minutes = duration % 60
