@@ -1,6 +1,6 @@
 import os
 
-import regex as re
+from MovieProject.Scrapers.IMDB.scraper import *
 
 
 class Movie:
@@ -12,13 +12,10 @@ class Movie:
         elif movie_path != "":
             self.folder_name = os.path.basename(movie_path)
             self.name = self.get_movie_name_without_year()
-        self.imdb_id = IMDBScreaper().get_imdb_id(movie_name=self.name)
+        self.imdb_id = IMDBScraper().scrape(self.name, IMDBScrapeMode.ID)
 
     def get_movie_name_without_year(self):
         return re.search("[a-zA-Z ]+", self.folder_name).group()
 
     def __str__(self):
         return self.name
-
-# movie = Movie("E:\Quick access\Documents\Info\Proiecte mari\Python\Movie Project\Folder Test\Once upon a time...(2002)","")
-# movie.get_movie_name_without_year()

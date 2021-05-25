@@ -1,10 +1,10 @@
 import regex as re
 from bs4 import BeautifulSoup
 
-from Scrapers.FileList.FilelistTorrentData import FileListTorrentData
-from Scrapers.IMDB.imdb_scraper import IMDBScraper, IMDBScrapeMode
-from Scrapers.MyScraperLibrary.ScraperQuery import ScaperQuery
-from Scrapers.settings import FileListSettings
+from MovieProject.Scrapers.FileList.FilelistTorrentData import FileListTorrentData
+from MovieProject.Scrapers.IMDB.scraper import IMDBScraper, IMDBScrapeMode
+from MovieProject.Scrapers.MyScraperLibrary.ScraperQuery import ScaperQuery
+from MovieProject.Scrapers.settings import FileListSettings
 
 
 class FileListScraper(ScaperQuery):

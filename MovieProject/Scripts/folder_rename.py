@@ -1,54 +1,17 @@
 import os
 
-import regex as re
 import crayons
-
-
-def is_int(s):
-    try:
-        int(s)
-        return True
-    except ValueError:
-        return False
-
-
-def modify_name(name):
-    renamed = str()
-    i = 0
-    while i < len(name):
-        letter = name[i]
-
-        if is_int(name[i]) and is_int(name[i + 1]) and is_int(name[i + 2]) and is_int(name[i + 3]):
-            if name[i - 1] != '(':
-                renamed += '('
-
-            renamed += name[i:i + 4]
-            renamed += ')'
-            break
-        if name[i] == '.':
-            j = i
-            while name[j] == '.':
-                j += 1
-            cnt = j - i
-            if j - i == 1:
-                renamed += ' '
-            else:
-                renamed += name[i:j]
-            i = j - 1
-        else:
-            renamed += letter
-        i += 1
-    return renamed
+import regex as re
 
 
 def modify_name_regex(name):
-    pattern_number = "\d+"
+    pattern_number = r"\d+"
     year = re.findall(pattern_number, name)
 
-    pattern_letters = "[A-Za-z ]+"
+    pattern_letters = r"[A-Za-z ]+"
     first_match = re.search(pattern_letters, name).end()
 
-    puncte = "\.{0}(\.{3})?"
+    puncte = r"\.{0}(\.{3})?"
     puncte_final = re.findall(puncte, name[first_match:])[0]
 
     current_name = name[:first_match] + puncte_final

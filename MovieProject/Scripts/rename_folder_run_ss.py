@@ -2,6 +2,7 @@ import os
 import subprocess
 import crayons
 
+from MovieProject.Scrapers.Subtitles.subtitles_diactritice import run_subtitles_diactritice
 
 # !!!! IMPORTANT daca vrei sa schimbi directorul de cautare
 input_dir = r"M:\TV shows\Merlin"
@@ -105,8 +106,6 @@ def subtitles_diactritice_all():
                 path = subdir + os.sep + file
                 if file.endswith(".srt"):
                     print(path)
-                    subtitles.modify_subtitles_diactritice(path)
+                    run_subtitles_diactritice(path)
 
-#rename_all_movies_in_dir()
 run_ss_subtitle_search()
-#subtitles_diactritice_all()

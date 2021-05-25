@@ -3,10 +3,11 @@ import pathlib
 
 import argparse
 
-from Scrapers.FileList.FilelistDownloader import FileListDownloader
-from Scripts.folder_rename import run_folder_rename_dir
-from Scripts.subtitles_diactritice import run_subtitle_replace_dir
-from Scrapers.yifi_scraper import YifiScreaper
+from MovieProject.Scrapers.FileList.FilelistDownloader import FileListDownloader
+from MovieProject.Scrapers.Subtitles.subtitles_diactritice import run_subtitle_replace_dir
+from MovieProject.Scrapers.Subtitles.yifi_scraper import YifiScreaper
+from MovieProject.Scripts.folder_rename import run_folder_rename_dir
+
 
 class MovieHandler:
     def __init__(self, directory):
@@ -57,9 +58,7 @@ def main():
         args.directory = pathlib.Path(__file__).parent.absolute()
         print(f"Using the current directory {args.directory}")
 
-    movie_handler = MovieHandler(
-        directory=args.directory,
-    )
+    movie_handler = MovieHandler(directory=args.directory,)
     if args.find_yifi:
         movie_handler.run_subtitles_serach_yifi(args.view)
     if args.diacritice:
