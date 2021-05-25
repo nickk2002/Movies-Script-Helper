@@ -1,6 +1,43 @@
 # Movies-Script-Helper
 Acest repository contine un site de filme creat folosind django si separat un folder cu scrapere pentru aplicatii de filme.
 
+
+**For running Scrapers**
+Collection of python scripts that help find subtitles change directory names 
+
+The setup is quite easy
+
+
+1.First clone the repo using `git clone https://github.com/nickk2002/Movies-Script-Helper`
+
+
+2.Navigate to the created folder `cd Movies-Script-Helper`
+
+
+3.Install requirements `pip install -r requirements.txt`
+
+4.Navigate to the folder where the code lives `cd MovieProject`
+
+
+3.Run the movie manager with desired arguments `python manage.py -dir="E:\Quick access\Desktop\Test" -di -tor`
+
+
+Arguments: 
+
+
+`-dir=directory_name` to set the directory of movies
+
+
+`-di` to run diactritice replace
+
+
+`-m` to run folder rename
+
+
+`-tor` to run interactive download shell from filelist
+
+
+
 **Sectiunea Site-ului**
 
 **Documentatia codului**
@@ -23,36 +60,3 @@ Scrieti "cmd" in locul path-ului si apasati enter ![image](https://user-images.g
 
 
 
-**For running Scrapers**
-Collection of python scripts that help find subtitles change directory names 
-
-The setup is quite easy
-
-
-1.First clone the repo using `git clone https://github.com/nickk2002/Movies-Script-Helper`
-
-
-2.Navigate to the created folder `cd Movies-Script-Helper`
-
-
-3.Install requirements `pip install -r requirements.txt`
-
-4.Navigate to the app folder where the code lives `cd app`
-
-
-3.Run the movie handler with desired arguments `py -m Scripts.movie_handler -di -dir="directory" -tor`
-
-
-Arguments: 
-
-
-`-dir=directory_name` to set the directory of movies
-
-
-`-di` to run diactritice replace
-
-
-`-m` to run folder rename
-
-
-`-tor` to run interactive download shell from filelist
