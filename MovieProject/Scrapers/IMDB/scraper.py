@@ -6,13 +6,11 @@ import pandas as pd
 import regex as re
 from bs4 import BeautifulSoup
 
-from .scrape_mode import IMDBScrapeMode
-from .exceptions import IMDB404Error, IMDBNoMoviesFound
-from .imdb_data import IMDBData
-
 from MovieProject.Scrapers.MyScraperLibrary.ScraperQuery import ScaperQuery
 from MovieProject.Scrapers.helpers import append_df_to_excel
-
+from .exceptions import IMDB404Error, IMDBNoMoviesFound
+from .imdb_data import IMDBData
+from .scrape_mode import IMDBScrapeMode
 
 
 def load_as_string(ls: list):
@@ -287,12 +285,17 @@ class IMDBScraper(ScaperQuery):
             budget=budget,
         )
 
-    def get_information(self, imdb_id, scrape_mode: IMDBScrapeMode):
-        imdb_id = str(imdb_id)
+    @staticmethod
+    def parse_number_to_id(number):
+        imdb_id = str(number)
         if imdb_id.startswith("tt"):
             imdb_id = imdb_id[2:]
         if len(imdb_id) < 7:
             imdb_id = "0" * (7 - len(imdb_id)) + imdb_id
+        return imdb_id
+
+    def get_information(self, imdb_id, scrape_mode: IMDBScrapeMode):
+        imdb_id = self.parse_number_to_id(imdb_id)
         page_url = f"https://www.imdb.com/title/tt{imdb_id}/?ref_=fn_al_tt_1"
         soup = self.get_soup_from_url(page_url)
         if scrape_mode == IMDBScrapeMode.FullScrape:

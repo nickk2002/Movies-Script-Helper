@@ -7,12 +7,17 @@ from pyunpack import Archive
 from MovieProject.Scrapers.IMDB.scraper import IMDBScraper, IMDBScrapeMode
 from MovieProject.Scrapers.MyScraperLibrary.ScraperQuery import ScaperQuery
 
+class SubtitlesNotFound(Exception):
+    pass
 
 class SubsroScraper(ScaperQuery):
     base_link = "https://subs.ro"
 
     def get_query_link(self, query_name):
-        imdb_id = IMDBScraper().scrape(query_name, IMDBScrapeMode.ID)
+        if query_name.isnumeric():
+            imdb_id = IMDBScraper.parse_number_to_id(query_name)
+        else:
+            imdb_id = IMDBScraper().scrape(query_name, IMDBScrapeMode.ID)
         return f"/subtitrari/imdbid/{imdb_id}"
 
     def handle_result(self, soup: BeautifulSoup):
@@ -41,6 +46,8 @@ class SubsroScraper(ScaperQuery):
 
     def handle_query_result(self, query_url: str, soup: BeautifulSoup, scrape_enum):
         results_wrapper = soup.find("ul", class_="items")
+        if results_wrapper is None:
+            raise SubtitlesNotFound("Could not find subtitles for the movie with the query",self.query_name)
         results = results_wrapper.find_all("li")
         first_subtitle = results[0]
         return self.handle_result(first_subtitle)
@@ -54,4 +61,4 @@ def test():
 
 
 if __name__ == "__main__":
-    SubsroScraper().scrape("Once upon a time")
+    SubsroScraper().scrape(25)

@@ -80,8 +80,7 @@ def run_subtitle_replace_dir(directory):
                     subtitles_modifed += 1
     print(f"Discovered {subtitles}. And modified {subtitles_modifed}")
 
-file = r"E:\Quick access\Desktop\www.subs.ro_marco-polo-sezonul-1-2014\Marco.Polo.2014.S01.720p.BluRay.x264-DEMAND"
-# run_subtitle_replace_dir(file)
-with open("E:\Quick access\Desktop\www.subs.ro_marco-polo-sezonul-1-2014\Marco.Polo.2014.S01.720p.BluRay.x264-DEMAND",'w') as f:
-    pass
-# run_subtitles_diactritice(file,"Marco.Polo.2014.S01.720p.BluRay.x264-DEMAND")
+if __name__ == "__main__":
+    file = r"E:\Quick access\Desktop\www.subs.ro_marco-polo-sezonul-1-2014\Marco.Polo.2014.S01.720p.BluRay.x264-DEMAND"
+    with open("E:\Quick access\Desktop\www.subs.ro_marco-polo-sezonul-1-2014\Marco.Polo.2014.S01.720p.BluRay.x264-DEMAND",'w') as f:
+        pass

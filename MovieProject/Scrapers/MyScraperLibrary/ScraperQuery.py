@@ -115,7 +115,7 @@ class ScaperQuery:
 
     @staticmethod
     def split_query_name(query_name: str):
-        return query_name.replace(" ", "+")
+        return str(query_name).replace(" ", "+")
 
     def check_good_login(self, soup: BeautifulSoup, data: dict):
         pass
@@ -138,7 +138,7 @@ class ScaperQuery:
             data=data)  # will raise exception if the login failed
 
     def scrape(self, query_name: str, scrape_enum=0):
-        self.query_name = query_name
+        self.query_name = str(query_name)
 
         if self.login:
             self.log_in(self.user, self.password)
